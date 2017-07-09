@@ -7,7 +7,7 @@ export default class Vector {
   }
 
   get length(){
-    return 
+    return
   }
   set length( value ) {
     this.normalize().multiplyScalar( value );

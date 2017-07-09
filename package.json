@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha-webpack --webpack-config webpack.config-test.js test",
+    "test:watch": "mocha-webpack --watch --webpack-config webpack.config-test.js test"
   },
   "author": "Darek Greenly",
   "license": "ISC",
@@ -23,7 +24,9 @@
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.29.0",
     "json-loader": "^0.5.4",
+    "mocha": "^3.4.2",
+    "mocha-webpack": "^0.7.0",
     "style-loader": "^0.18.2",
-    "transform-loader": "^0.2.4"
+    "webpack-node-externals": "^1.6.0"
   }
 }
