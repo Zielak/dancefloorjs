@@ -13,10 +13,6 @@ export default class Actor extends CES.Entity {
 	constructor({pos}){
 		super()
 
-		this.addComponent(new Mover({pos: pos}))
-
-		// Self add itself to the world
-		world.addEntity(this)
 	}
 
 }

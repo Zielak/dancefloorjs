@@ -4,10 +4,12 @@ export default class Vector {
   constructor(x, y) {
     this.x = x || 0
     this.y = y || 0
+
+    return this
   }
 
   get length(){
-    return
+    return Math.sqrt( this.x * this.x + this.y * this.y )
   }
   set length( value ) {
     this.normalize().multiplyScalar( value );

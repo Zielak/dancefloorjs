@@ -2,19 +2,19 @@ import CES from 'ces'
 import Vector from '../vector'
 
 export default class Mover extends CES.Component {
-	constructor({pos}){
+	constructor({pos, acceleration, force, velocity}){
 		super()
 		this.name = 'mover'
 		
 		// Direction-aware velocity
-		this.velocity = new Vector()
+		this.velocity = velocity || new Vector()
 
 		// constant addition
-		this.acceleration = new Vector()
+		this.acceleration = acceleration || new Vector()
 
 		// Force is reset each frame.
 		// Should be used to apply impulse forces, like jump.
-		this.force = new Vector()
+		this.force = force || new Vector()
 		
 		// Real position of Actor, right before it's rounded for view
 		this.realPos = new Vector(pos.x || 0, pos.y || 0)
@@ -41,11 +41,11 @@ export default class Mover extends CES.Component {
 		// TODO: use it some day. z-index or something?
 		// this.entity.depth = realPos.y / 1000;
 
-		this.velocity.add(this.force)
-		this.velocity.add(this.acceleration)
-		
-		this.realPos.x += this.velocity.x * dt
-		this.realPos.y += this.velocity.y * dt
+		// this.velocity.add(this.force)
+		// this.velocity.add(this.acceleration)
+		// TODO: do I need delta fix? It's like 60-80 in here
+		this.realPos.x += this.velocity.x// / dt
+		this.realPos.y += this.velocity.y// / dt
 
 		this.force.set_xy(0, 0)
 	}

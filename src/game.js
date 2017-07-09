@@ -62,7 +62,10 @@ function prepareECS(){
 }
 
 function spawnPeople(){
-	utils.repeat(10)(spawnGuy)
+	for (var i = 0; i < 1000; i++) {
+		spawnGuy()
+	}
+	// utils.repeat(10000)(spawnGuy)
 }
 
 function spawnGuy(){
@@ -75,7 +78,8 @@ function spawnGuy(){
 }
 
 export function init(){
-	document.addEventListener('click', gameLoop.start)
+	// document.addEventListener('click', gameLoop.start)
+	gameLoop.start()
 
 	// Debug stuff
 	document.addEventListener('keydown', keyDownHandler)

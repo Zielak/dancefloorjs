@@ -2,8 +2,10 @@ import {Graphics} from 'pixi.js'
 
 import {world, stage, rnd} from '../game'
 import Actor from '../actor'
+import Vector from '../vector'
 
 import Thirst from './thirst'
+import Mover from '../components/mover'
 
 
 export default class Human extends Actor {
@@ -32,7 +34,15 @@ export default class Human extends Actor {
       .drawRect(-this.width / 2, -this.height, this.width, this.height)
       .endFill()
 
+    this.addComponent(new Mover({
+      pos: pos,
+      velocity: new Vector(
+        rnd.floating({min:-1, max:1}),
+        rnd.floating({min:-1, max:1})
+      )
+    }))
     this.addComponent(new Thirst())
+
     // this.addComponent(new Hunger())
     // this.addComponent(new Intoxication())
 
@@ -48,6 +58,7 @@ export default class Human extends Actor {
     // Debugging
     // add(new components.HumanVisualSelector({ bounds: new Rectangle(0, 0, width, height) }));
 
+    world.addEntity(this)
     world.addChild(this.geometry)
   }
 
