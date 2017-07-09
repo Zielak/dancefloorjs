@@ -1,6 +1,6 @@
 import {Graphics} from 'pixi.js'
 
-import {world, rnd} from '../game'
+import {world, stage, rnd} from '../game'
 import Actor from '../actor'
 
 import Thirst from './thirst'
@@ -28,22 +28,10 @@ export default class Human extends Actor {
     // TODO: get some better color management. HSL and random hues plz
     this.geometry = new Graphics()
     this.geometry
-      .beginFill(rnd.color({format: 'hex'}))
+      .beginFill(rnd.color({format: '0x'}))
       .drawRect(-this.width / 2, -this.height, this.width, this.height)
       .endFill()
 
-    world.addChild(this.geometry)
-  }
-
-  set x(v){ this.geometry.x = v }
-  set y(v){ this.geometry.y = v }
-  get x(){ return this.geometry.x }
-  get y(){ return this.geometry.y }
-
-
-
-  init() {
-    super.init()
     this.addComponent(new Thirst())
     // this.addComponent(new Hunger())
     // this.addComponent(new Intoxication())
@@ -59,7 +47,14 @@ export default class Human extends Actor {
 
     // Debugging
     // add(new components.HumanVisualSelector({ bounds: new Rectangle(0, 0, width, height) }));
+
+    world.addChild(this.geometry)
   }
+
+  set x(v){ this.geometry.x = v }
+  set y(v){ this.geometry.y = v }
+  get x(){ return this.geometry.x }
+  get y(){ return this.geometry.y }
 
 }
 

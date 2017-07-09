@@ -37,6 +37,8 @@ const state = {
 const gameLoop = {
 	start: () => {
 		document.removeEventListener('click', gameLoop.start)
+		prepareECS()
+		spawnPeople()
 		console.log('Game Loop > started')
 		requestAnimationFrame(gameLoop.update)
 	},
@@ -73,9 +75,6 @@ function spawnGuy(){
 }
 
 export function init(){
-	prepareECS()
-	spawnPeople()
-
 	document.addEventListener('click', gameLoop.start)
 
 	// Debug stuff
