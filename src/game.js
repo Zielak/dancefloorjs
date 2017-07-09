@@ -1,38 +1,62 @@
-import EntityManager from 'ensy'
-import * as d3 from 'd3'
+import CES from 'ces'
+import * as PIXI from 'pixi.js'
 
 import Change from 'chance'
-const chance = new Chance()
+export const rnd = new Chance()
 
 import Vector from './vector'
 import * as utils from './utils'
+
 import Human from './human/human'
+import HumanSystem from './human/system'
 
 import * as Thirst from './human/thirst'
 
-export let screen
-export let width
-export let height
+// EXPORTS
+
+export const gameWidth = document.body.offsetWidth
+export const gameHeight = document.body.offsetHeight
+
+export const renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight)
+document.body.appendChild(renderer.view)
+
+const _world = new CES.World()
+const _stage = new PIXI.Container()
+
+/**
+ * Marge of PIXI's Container and CES World class.
+ */
+export const world = Object.assign(CES.World.prototype, PIXI.Container.prototype, _world, _stage)
+
+// LOCALS
 
 const state = {
 	BPM: 128
 }
 
-function startLoop(){
-	document.removeEventListener('click', startLoop)
-	// Start the main loop of the game.
-	requestAnimationFrame(animate);
-	function animate() {
-			requestAnimationFrame(animate);
-			manager.update();
-	}
+const gameLoop = {
+	start: () => {
+		document.removeEventListener('click', gameLoop.start)
+		console.log('Game Loop > started')
+		requestAnimationFrame(gameLoop.update)
+	},
+	update: () => {
+		gameLoop.delta = window.performance.now() - gameLoop.lastTime
+		if(gameLoop.delta > 1000/50){
+			// console.log('Game Loop > stalling: dt = ', gameLoop.delta)
+		}
+
+		world.update(gameLoop.delta)
+		renderer.render(world)
+		requestAnimationFrame(gameLoop.update)
+		gameLoop.lastTime = window.performance.now()
+	},
+	lastTime: null,
+	delta: null
 }
 
-function prepareComponents(){
-	[Thirst].forEach(comp => {
-		manager.addComponent(comp.Component.name, comp.Component)
-		manager.addProcessor(new comp.Processor(manager))
-	})
+function prepareECS(){
+	world.addSystem(new HumanSystem())
 }
 
 function spawnPeople(){
@@ -42,27 +66,29 @@ function spawnPeople(){
 function spawnGuy(){
 	new Human({
 		pos: new Vector(
-			chance.floating({min:0, max:width}),
-			chance.floating({min:0, max:width})
+			rnd.floating({min:0, max:gameWidth}),
+			rnd.floating({min:0, max:gameHeight})
 		)
 	})
 }
 
-function spawnAreas(){
-	
-}
-
-export const manager = new EntityManager()
-
-export function init({_width, _height, _screen}){
-	width = _width
-	height = _height
-	screen = _screen
-
-	prepareComponents()
-
+export function init(){
+	prepareECS()
 	spawnPeople()
 
-	document.addEventListener('click', startLoop)
+	document.addEventListener('click', gameLoop.start)
+
+	// Debug stuff
+	document.addEventListener('keydown', keyDownHandler)
 }
 
+function keyDownHandler(e){
+	switch(e.which){
+		case 72: // H
+			console.log('All humans: ', world._entities.toArray())
+			break
+		case 77: // M
+			console.log('World: ', world)
+			break
+	}
+}

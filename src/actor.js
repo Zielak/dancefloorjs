@@ -1,4 +1,5 @@
-import * as Game from './game'
+import {rnd, world} from './game'
+import CES from 'ces'
 import Vector from './vector'
 
 /**
@@ -6,20 +7,13 @@ import Vector from './vector'
  * 
  * @class Actor
  */
-export default class Actor {
+export default class Actor extends CES.Entity {
 
 	constructor({pos}){
+		super()
 
-		this.components = {
-			add: components =>
-				Game.manager.addComponentsToEntity(components, this.entityId),
-			has: component => 
-				Game.manager.entityHasComponent(this.entityId, component),
-			get: components =>
-				Game.manager.getComponentDataForEntity(this.entityId, components),
-			remove: component =>
-				Game.manager.removeComponentsFromEntity(component, this.entityId)
-		}
+		// Self add itself to the world
+		world.addEntity(this)
 
 		// Direction-aware velocity
 		this.velocity = new Vector()
@@ -37,17 +31,10 @@ export default class Actor {
 
 
 	init() {
+		super.init()
 		this.realPos = Object.assign(new Vector(), this.pos);
 
 		// Main.physics.add(this);
-	}
-
-	ondestroy() {
-		// Main.physics.remove(this);
-		this.velocity = undefined
-		this.acceleration = undefined
-		this.force = undefined
-		this.realPos = undefined
 	}
 
 	/**
@@ -69,7 +56,7 @@ export default class Actor {
 		updateGeometryHeight();
 	}
 
-
+	// TODO: Move physics related stuff to components, if needed at all
 	applyForce(_x, _y, _z = 0) {
 		force.x += _x;
 		force.y += _y;
