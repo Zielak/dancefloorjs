@@ -1,6 +1,6 @@
 import {Graphics} from 'pixi.js'
 
-import {manager, rnd} from '../game'
+import {world, rnd} from '../game'
 import Actor from '../actor'
 
 import Thirst from './thirst'
@@ -13,7 +13,7 @@ export default class Human extends Actor {
     
     // this.entityId = manager.createEntity(['Thirst'])
 
-    this.realname = realname || 'Dummie'
+    this.realname = realname || rnd.name()
     this.age = age || rnd.floating({min: 16.5, max: 45}) 
     this.sex = sex || rnd.bool() ? 'male' : 'female'
     this.orientation = orientation || rnd.pickone([
@@ -32,7 +32,15 @@ export default class Human extends Actor {
       .drawRect(-this.width / 2, -this.height, this.width, this.height)
       .endFill()
 
+    world.addChild(this.geometry)
   }
+
+  set x(v){ this.geometry.x = v }
+  set y(v){ this.geometry.y = v }
+  get x(){ return this.geometry.x }
+  get y(){ return this.geometry.y }
+
+
 
   init() {
     super.init()

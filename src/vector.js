@@ -2,8 +2,8 @@
 export default class Vector {
 
   constructor(x, y) {
-    this.x = x
-    this.y = y
+    this.x = x || 0
+    this.y = y || 0
   }
 
   get length(){
@@ -52,7 +52,7 @@ export default class Vector {
    * @memberof Vector
    */
   round() {
-    return set_xy(Math.round(this.x), Math.round(this.y))
+    return this.set_xy(Math.round(this.x), Math.round(this.y))
   }
 
   /**
@@ -83,19 +83,19 @@ export default class Vector {
   // OPERATIONS
 
   add(other) {
-    return set_xy( this.x + other.x, this.y + other.y )
+    return this.set_xy( this.x + other.x, this.y + other.y )
   }
 
   subtract(other) {
-    return set_xy( this.x - other.x, this.y - other.y )
+    return this.set_xy( this.x - other.x, this.y - other.y )
   }
 
   multiply(other) {
-    return set_xy( this.x * other.x, this.y * other.y )
+    return this.set_xy( this.x * other.x, this.y * other.y )
   }
 
   divide(other) {
-    return set_xy( this.x / other.x, this.y / other.y )
+    return this.set_xy( this.x / other.x, this.y / other.y )
   }
 
   addScalar(v){
