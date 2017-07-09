@@ -108,7 +108,7 @@ export default class Vector {
     return this.set_xy(this.x * v, this.y * v)
   }
   divideScalar(v) {
-    v != 0 ? this.set_xyz(x / v, y / v, z / v) : this.set_xyz(0, 0, 0)
+    v != 0 ? this.set_xy(this.x / v, this.y / v) : this.set_xy(0, 0)
     return this
   }
 
@@ -121,7 +121,7 @@ export default class Vector {
   }
 
   get inverted(){
-    return new Vector(-x, -y)
+    return new Vector(-this.x, -this.y)
   }
 
   /**
