@@ -1,5 +1,5 @@
 import CES from 'ces'
-import { rnd } from '../game'
+// import { rnd } from '../game'
 
 const handlers = {
 	thirst: (ent, dt) => {

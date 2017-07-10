@@ -1,6 +1,6 @@
 import { Graphics } from 'pixi.js'
 
-import { world, stage, rnd } from '../game'
+import { world, rnd } from '../game'
 import Actor from '../actor'
 import Vector from '../vector'
 

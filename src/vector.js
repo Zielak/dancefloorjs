@@ -12,8 +12,8 @@ export default class Vector {
 		return Math.sqrt(this.x * this.x + this.y * this.y)
 	}
 	set length(value) {
-		this.normalize().multiplyScalar(value);
-		return value;
+		this.normalize().multiplyScalar(value)
+		return value
 	}
 
 	set_xy(x, y) {
@@ -22,64 +22,64 @@ export default class Vector {
 		return this
 	}
 
-  /**
-   * 
-   * 
-   * @param {number} _dest_x 
-   * @param {number} _dest_y 
-   * @param {number} _t 
-   * @returns this
-   * @memberof Vector
-   */
+	/**
+	 * 
+	 * 
+	 * @param {number} _dest_x 
+	 * @param {number} _dest_y 
+	 * @param {number} _t 
+	 * @returns this
+	 * @memberof Vector
+	 */
 	lerp_xy(_dest_x, _dest_y, _t) {
 		return this.set_xy(Math.lerp(this.x, _dest_x, _t), Math.lerp(this.y, _dest_y, _t))
 	}
 
-  /**
-   * 
-   * 
-   * @param {Vector} _other 
-   * @param {number} _t 
-   * @returns this
-   * @memberof Vector
-   */
+	/**
+	 * 
+	 * 
+	 * @param {Vector} _other 
+	 * @param {number} _t 
+	 * @returns this
+	 * @memberof Vector
+	 */
 	lerp(_other, _t) {
 		return this.set_xy(Math.lerp(this.x, _other.x, _t), Math.lerp(this.y, _other.y, _t))
 	}
 
-  /**
-   * Rounds vector coordinated to "integers"
-   * 
-   * @returns 
-   * @memberof Vector
-   */
+	/**
+	 * Rounds vector coordinated to "integers"
+	 * 
+	 * @returns 
+	 * @memberof Vector
+	 */
 	round() {
 		return this.set_xy(Math.round(this.x), Math.round(this.y))
 	}
 
-  /**
-   * 
-   * 
-   * @param {Vector} other 
-   * @returns 
-   * @memberof Vector
-   */
+	/**
+	 * 
+	 * 
+	 * @param {Vector} other 
+	 * @returns 
+	 * @memberof Vector
+	 */
 	equals(other) {
-		return (this.x === other.x && this.y === other.y);
+		return (this.x === other.x && this.y === other.y)
 	}
 
-  /**
-   * 
-   * 
-   * @returns {Vector}
-   * @memberof Vector
-   */
+	/**
+	 * 
+	 * 
+	 * @returns {Vector}
+	 * @memberof Vector
+	 */
 	clone() {
 		return new Vector(this.x, this.y)
 	}
 
 	toString() {
-		return "{ x:" + this.x + ", y:" + this.y + ", z:" + this.z + " }"
+		return `{ x: ${this.x}, y: ${this.y} }`
 	}
 
 	// OPERATIONS
@@ -126,12 +126,12 @@ export default class Vector {
 		return new Vector(-this.x, -this.y)
 	}
 
-  /**
-   * Changes the angle of the vector.
-   * X and Y will change, length stays the same.
-   * 
-   * @memberof Vector
-   */
+	/**
+	 * Changes the angle of the vector.
+	 * X and Y will change, length stays the same.
+	 * 
+	 * @memberof Vector
+	 */
 	set angle2D(v) {
 		this.set_xy(Math.cos(v) * this.length, Math.sin(v) * this.length)
 	}

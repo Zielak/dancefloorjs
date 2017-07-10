@@ -1,16 +1,13 @@
 import CES from 'ces'
 import * as PIXI from 'pixi.js'
 
-import Change from 'chance'
+import Chance from 'chance'
 export const rnd = new Chance()
 
 import Vector from './vector'
-import * as utils from './utils'
 
 import Human from './human/human'
 import HumanSystem from './human/system'
-
-import * as Thirst from './human/thirst'
 
 // EXPORTS
 
@@ -33,6 +30,7 @@ export const world = Object.assign(CES.World.prototype, PIXI.Container.prototype
 const state = {
 	BPM: 128
 }
+state
 
 const gameLoop = {
 	start: () => {

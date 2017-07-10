@@ -1,7 +1,4 @@
-import {rnd, world} from './game'
 import CES from 'ces'
-import Mover from './components/mover'
-import Vector from './vector'
 
 /**
  * Actor should be an extension of SVG element
@@ -10,9 +7,8 @@ import Vector from './vector'
  */
 export default class Actor extends CES.Entity {
 
-	constructor({pos}){
+	constructor(){
 		super()
-
 	}
 
 }
