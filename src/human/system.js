@@ -1,5 +1,5 @@
 import CES from 'ces'
-import {rnd} from '../game'
+import { rnd } from '../game'
 
 const handlers = {
 	thirst: (ent, dt) => {
@@ -21,9 +21,9 @@ const handlers = {
 }
 
 export default class HumanSystem extends CES.System {
-	update(dt){
-		Object.keys(handlers).forEach( key => {
-			this.world.getEntities( key ).forEach( ent => handlers[key](ent, dt) )
+	update(dt) {
+		Object.keys(handlers).forEach(key => {
+			this.world.getEntities(key).forEach(ent => handlers[key](ent, dt))
 		})
 	}
 }

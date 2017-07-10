@@ -1,26 +1,26 @@
 
 export default class Vector {
 
-  constructor(x, y) {
-    this.x = x || 0
-    this.y = y || 0
+	constructor(x, y) {
+		this.x = x || 0
+		this.y = y || 0
 
-    return this
-  }
+		return this
+	}
 
-  get length(){
-    return Math.sqrt( this.x * this.x + this.y * this.y )
-  }
-  set length( value ) {
-    this.normalize().multiplyScalar( value );
-    return value;
-  }
+	get length() {
+		return Math.sqrt(this.x * this.x + this.y * this.y)
+	}
+	set length(value) {
+		this.normalize().multiplyScalar(value);
+		return value;
+	}
 
-  set_xy(x, y) {
-    this.x = x
-    this.y = y
-    return this
-  }
+	set_xy(x, y) {
+		this.x = x
+		this.y = y
+		return this
+	}
 
   /**
    * 
@@ -31,9 +31,9 @@ export default class Vector {
    * @returns this
    * @memberof Vector
    */
-  lerp_xy(_dest_x, _dest_y, _t) {
-    return this.set_xy(Math.lerp(this.x, _dest_x, _t), Math.lerp(this.y, _dest_y, _t))
-  }
+	lerp_xy(_dest_x, _dest_y, _t) {
+		return this.set_xy(Math.lerp(this.x, _dest_x, _t), Math.lerp(this.y, _dest_y, _t))
+	}
 
   /**
    * 
@@ -43,9 +43,9 @@ export default class Vector {
    * @returns this
    * @memberof Vector
    */
-  lerp(_other, _t) {
-    return this.set_xy(Math.lerp(this.x, _other.x, _t), Math.lerp(this.y, _other.y, _t))
-  }
+	lerp(_other, _t) {
+		return this.set_xy(Math.lerp(this.x, _other.x, _t), Math.lerp(this.y, _other.y, _t))
+	}
 
   /**
    * Rounds vector coordinated to "integers"
@@ -53,9 +53,9 @@ export default class Vector {
    * @returns 
    * @memberof Vector
    */
-  round() {
-    return this.set_xy(Math.round(this.x), Math.round(this.y))
-  }
+	round() {
+		return this.set_xy(Math.round(this.x), Math.round(this.y))
+	}
 
   /**
    * 
@@ -64,9 +64,9 @@ export default class Vector {
    * @returns 
    * @memberof Vector
    */
-  equals(other) {
-    return (this.x === other.x && this.y === other.y);
-  }
+	equals(other) {
+		return (this.x === other.x && this.y === other.y);
+	}
 
   /**
    * 
@@ -74,57 +74,57 @@ export default class Vector {
    * @returns {Vector}
    * @memberof Vector
    */
-  clone() {
-    return new Vector(this.x, this.y)
-  }
+	clone() {
+		return new Vector(this.x, this.y)
+	}
 
-  toString() {
-    return "{ x:" + this.x + ", y:" + this.y + ", z:" + this.z + " }"
-  }
+	toString() {
+		return "{ x:" + this.x + ", y:" + this.y + ", z:" + this.z + " }"
+	}
 
-  // OPERATIONS
+	// OPERATIONS
 
-  add(other) {
-    return this.set_xy( this.x + other.x, this.y + other.y )
-  }
+	add(other) {
+		return this.set_xy(this.x + other.x, this.y + other.y)
+	}
 
-  subtract(other) {
-    return this.set_xy( this.x - other.x, this.y - other.y )
-  }
+	subtract(other) {
+		return this.set_xy(this.x - other.x, this.y - other.y)
+	}
 
-  multiply(other) {
-    return this.set_xy( this.x * other.x, this.y * other.y )
-  }
+	multiply(other) {
+		return this.set_xy(this.x * other.x, this.y * other.y)
+	}
 
-  divide(other) {
-    return this.set_xy( this.x / other.x, this.y / other.y )
-  }
+	divide(other) {
+		return this.set_xy(this.x / other.x, this.y / other.y)
+	}
 
-  addScalar(v){
-    return this.set_xy(this.x + v, this.y + v)
-  }
-  subtractScalar(v){
-    return this.set_xy(this.x - v, this.y - v)
-  }
-  multiplyScalar(v) {
-    return this.set_xy(this.x * v, this.y * v)
-  }
-  divideScalar(v) {
-    v != 0 ? this.set_xy(this.x / v, this.y / v) : this.set_xy(0, 0)
-    return this
-  }
+	addScalar(v) {
+		return this.set_xy(this.x + v, this.y + v)
+	}
+	subtractScalar(v) {
+		return this.set_xy(this.x - v, this.y - v)
+	}
+	multiplyScalar(v) {
+		return this.set_xy(this.x * v, this.y * v)
+	}
+	divideScalar(v) {
+		v != 0 ? this.set_xy(this.x / v, this.y / v) : this.set_xy(0, 0)
+		return this
+	}
 
 
-  get normalized(){
-    return this.clone().normalize()
-  }
-  normalize() {
-    return this.divideScalar( this.length )
-  }
+	get normalized() {
+		return this.clone().normalize()
+	}
+	normalize() {
+		return this.divideScalar(this.length)
+	}
 
-  get inverted(){
-    return new Vector(-this.x, -this.y)
-  }
+	get inverted() {
+		return new Vector(-this.x, -this.y)
+	}
 
   /**
    * Changes the angle of the vector.
@@ -132,10 +132,10 @@ export default class Vector {
    * 
    * @memberof Vector
    */
-  set angle2D(v){
-    this.set_xy( Math.cos(v) * this.length, Math.sin(v) * this.length )
-  }
-  get angle2D(){
-    return Math.atan2(this.y, this.x)
-  }
+	set angle2D(v) {
+		this.set_xy(Math.cos(v) * this.length, Math.sin(v) * this.length)
+	}
+	get angle2D() {
+		return Math.atan2(this.y, this.x)
+	}
 }
