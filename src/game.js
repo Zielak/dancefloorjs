@@ -44,7 +44,7 @@ const gameLoop = {
 	},
 	update: () => {
 		gameLoop.delta = window.performance.now() - gameLoop.lastTime
-		if(gameLoop.delta > 1000/50){
+		if (gameLoop.delta > 1000 / 50) {
 			// console.log('Game Loop > stalling: dt = ', gameLoop.delta)
 		}
 
@@ -57,27 +57,27 @@ const gameLoop = {
 	delta: null
 }
 
-function prepareECS(){
+function prepareECS() {
 	world.addSystem(new HumanSystem())
 }
 
-function spawnPeople(){
+function spawnPeople() {
 	for (var i = 0; i < 1000; i++) {
 		spawnGuy()
 	}
 	// utils.repeat(10000)(spawnGuy)
 }
 
-function spawnGuy(){
+function spawnGuy() {
 	new Human({
 		pos: new Vector(
-			rnd.floating({min:0, max:gameWidth}),
-			rnd.floating({min:0, max:gameHeight})
+			rnd.floating({ min: 0, max: gameWidth }),
+			rnd.floating({ min: 0, max: gameHeight })
 		)
 	})
 }
 
-export function init(){
+export function init() {
 	// document.addEventListener('click', gameLoop.start)
 	gameLoop.start()
 
@@ -85,8 +85,8 @@ export function init(){
 	document.addEventListener('keydown', keyDownHandler)
 }
 
-function keyDownHandler(e){
-	switch(e.which){
+function keyDownHandler(e) {
+	switch (e.which) {
 		case 72: // H
 			console.log('All humans: ', world._entities.toArray())
 			break
