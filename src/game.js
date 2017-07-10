@@ -7,7 +7,8 @@ export const rnd = new Chance()
 import Vector from './vector'
 
 import Human from './human/human'
-import HumanSystem from './human/system'
+import HumanSystem from './systems/human'
+import MovementSystem from './systems/movement'
 
 // EXPORTS
 
@@ -57,13 +58,13 @@ const gameLoop = {
 
 function prepareECS() {
 	world.addSystem(new HumanSystem())
+	world.addSystem(new MovementSystem())
 }
 
 function spawnPeople() {
-	for (var i = 0; i < 1000; i++) {
+	for (var i = 0; i < 10; i++) {
 		spawnGuy()
 	}
-	// utils.repeat(10000)(spawnGuy)
 }
 
 function spawnGuy() {

@@ -33,20 +33,4 @@ export default class Mover extends CES.Component {
 		this.velocity.set_length2D(v)
 		return this.velocity.get_length2D()
 	}
-
-	update(dt, entity) {
-		entity.x = Math.round(this.realPos.x)
-		entity.y = Math.round(this.realPos.y)
-
-		// TODO: use it some day. z-index or something?
-		// this.entity.depth = realPos.y / 1000;
-
-		// this.velocity.add(this.force)
-		// this.velocity.add(this.acceleration)
-		// TODO: do I need delta fix? It's like 60-80 in here
-		this.realPos.x += this.velocity.x// / dt
-		this.realPos.y += this.velocity.y// / dt
-
-		this.force.set_xy(0, 0)
-	}
 }

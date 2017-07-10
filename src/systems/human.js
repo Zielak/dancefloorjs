@@ -14,10 +14,6 @@ const handlers = {
 		let comp = ent.getComponent('hunger')
 		comp.value += dt * comp.change
 	},
-	mover: (ent, dt) => {
-		let comp = ent.getComponent('mover')
-		comp && comp.update(dt, ent)
-	}
 }
 
 export default class HumanSystem extends CES.System {
