@@ -34,18 +34,32 @@ state
 const gameLoop = {
 	start: () => {
 		document.removeEventListener('click', gameLoop.start)
+
+		document.addEventListener('visibilitychange', () => {
+			// Start the loop again when browser tab becomes active
+			if(document.visibilityState === 'visible'){
+				gameLoop.resume()
+			}
+		})
+
 		spawnPeople()
 		console.log('Game Loop > started')
+		gameLoop.resume()
+	},
+	resume: () => {
+		gameLoop.lastTime = window.performance.now()
 		requestAnimationFrame(gameLoop.update)
 	},
 	update: () => {
+		// Break the loop when we hide
+		if(document.visibilityState === 'hidden') return
+
 		gameLoop.delta = window.performance.now() - gameLoop.lastTime
-		if (gameLoop.delta > 1000 / 50) {
-			// console.log('Game Loop > stalling: dt = ', gameLoop.delta)
-		}
 
 		world.update(gameLoop.delta)
 		renderer.render(world)
+
+		// Keep the loop going
 		requestAnimationFrame(gameLoop.update)
 		gameLoop.lastTime = window.performance.now()
 	},
