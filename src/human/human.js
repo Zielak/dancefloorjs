@@ -2,13 +2,14 @@ import { Graphics } from 'pixi.js'
 
 import { world, rnd } from '../game'
 import Entity from '../entity'
-import Vector from '../vector'
+// import Vector from '../vector'
 
 import Thirst from './thirst'
 import Hunger from './hunger'
 import Intoxication from './intoxication'
 import Mover from '../components/mover'
 
+import AIController from '../components/aicontroller'
 
 export default class Human extends Entity {
 
@@ -38,14 +39,12 @@ export default class Human extends Entity {
 
 		this.addComponent(new Mover({
 			pos: pos,
-			velocity: new Vector(
-				rnd.floating({ min: -1, max: 1 }),
-				rnd.floating({ min: -1, max: 1 })
-			)
 		}))
 		this.addComponent(new Thirst())
 		this.addComponent(new Hunger())
 		this.addComponent(new Intoxication())
+
+		this.addComponent(new AIController())
 
 		// add(new components.AIController({ name: 'controller' }));
 		// add(new components.InputAI({ name: 'input' }));
