@@ -1,5 +1,6 @@
 import Component from '../component'
 import Vector from '../vector'
+import {world, gameWidth, gameHeight} from '../game'
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity }) {
@@ -17,20 +18,17 @@ export default class Mover extends Component {
 
 		// Real position of entity, right before it's rounded for view
 		this.realPos = new Vector(pos.x || 0, pos.y || 0)
-	}
-	
-	addedToWorld(world) {
-		super.addedToWorld(world)
+
 		this.bounds = {
 			x: 0, y: 0,
-			w: world.width,
-			h: world.height
+			w: gameWidth,
+			h: gameHeight
 		}
 	}
 	
-	update(dt) {
-		this.entity.x = Math.round(this.realPos.x)
-		this.entity.y = Math.round(this.realPos.y)
+	update(dt, entity) {
+		entity.x = Math.round(this.realPos.x)
+		entity.y = Math.round(this.realPos.y)
 
 		this.velocity.add(this.force)
 		this.velocity.add(this.acceleration)
@@ -43,7 +41,12 @@ export default class Mover extends Component {
 
 		// Reset force back to zero
 		this.force.set_xy(0, 0)
-		// TODO: Sort all children by pos.y zorder
+	}
+
+	postUpdate(){
+		world.children = world.children.sort((a, b)=>{
+			return a.y - b.y
+		})
 	}
 
 	// TODO: Move physics related stuff to components, if needed at all

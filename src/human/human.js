@@ -13,7 +13,7 @@ import Mover from '../components/mover'
 export default class Human extends Entity {
 
 	constructor({ pos, realname, age, sex, orientation, status, persona }) {
-		super({ pos })
+		super()
 
 		// this.entityId = manager.createEntity(['Thirst'])
 

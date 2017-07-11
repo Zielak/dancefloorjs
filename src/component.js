@@ -12,17 +12,20 @@ const _systems = {}
 export default class Component {
 
 	constructor(name) {
-		const _name = name
+		this.name = name
 		this.component = new CES.Component()
-		this.component.name = _name
+		this.component.name = this.name
 		
-		if (_systems[_name] === undefined) {
-			_systems[_name] = new CES.System()
-			_systems[_name].update = dt => updateSystem(dt, _name)
-			this.system = _systems[_name]
-			world.addSystem(this)
+		if (_systems[this.name] === undefined) {
+			_systems[this.name] = new CES.System()
+			_systems[this.name].update = dt => {
+				updateComponents(dt, this.name)
+				this._postUpdate(dt)
+			}
+			this.system = _systems[this.name]
+			world.addSystem(this.system)
 		} else {
-			this.system = _systems[_name]
+			this.system = _systems[this.name]
 		}
 		
 		// Make sure component knows its master
@@ -40,23 +43,28 @@ export default class Component {
 
 
 	/**
-	 * SHOULD be overriden
+	 * Update function for each entitie's component
 	 * 
-	 * @param {any} dt 
+	 * @param {number} dt 
 	 * @memberof Component
 	 */
 	update(dt) {
 		throw new Error('Subclassed should override this method', dt)
 	}
-	
-	get entity() {
-		return world.getEntities([this.component.name])
+
+	/**
+	 * Run only once per system, after all components have been updated
+	 * 
+	 * @memberof Component
+	 */
+	_postUpdate() {
+		!!this.postUpdate && this.postUpdate(world.getEntities([this.name]))
 	}
 }
 
-function updateSystem(dt, name) {
+function updateComponents(dt, name) {
 	world.getEntities(name).forEach(ent => {
 		let comp = ent.getComponent(name)
-		comp._master.update(dt)
+		comp.update(dt, ent)
 	})
 }
