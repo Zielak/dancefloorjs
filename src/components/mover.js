@@ -1,10 +1,9 @@
-import CES from 'ces'
+import Component from '../component'
 import Vector from '../vector'
 
-export default class Mover extends CES.Component {
+export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity }) {
-		super()
-		this.name = 'mover'
+		super('mover')
 
 		// Direction-aware velocity
 		this.velocity = velocity || new Vector()
@@ -16,8 +15,35 @@ export default class Mover extends CES.Component {
 		// Should be used to apply impulse forces, like jump.
 		this.force = force || new Vector()
 
-		// Real position of Actor, right before it's rounded for view
+		// Real position of entity, right before it's rounded for view
 		this.realPos = new Vector(pos.x || 0, pos.y || 0)
+	}
+	
+	addedToWorld(world) {
+		super.addedToWorld(world)
+		this.bounds = {
+			x: 0, y: 0,
+			w: world.width,
+			h: world.height
+		}
+	}
+	
+	update(dt) {
+		this.entity.x = Math.round(this.realPos.x)
+		this.entity.y = Math.round(this.realPos.y)
+
+		this.velocity.add(this.force)
+		this.velocity.add(this.acceleration)
+
+		// TODO: do I need delta fix? It's like 60-80 in here
+		this.realPos.x += this.velocity.x * (dt / 10)
+		this.realPos.y += this.velocity.y * (dt / 10)
+
+		keepInBounds(this.realPos, this.velocity, this.bounds)
+
+		// Reset force back to zero
+		this.force.set_xy(0, 0)
+		// TODO: Sort all children by pos.y zorder
 	}
 
 	// TODO: Move physics related stuff to components, if needed at all
@@ -32,5 +58,22 @@ export default class Mover extends CES.Component {
 	set speed(v) {
 		this.velocity.set_length2D(v)
 		return this.velocity.get_length2D()
+	}
+}
+
+function keepInBounds(pos, vel, bounds) {
+	if(pos.x > bounds.w + bounds.x){
+		pos.x = bounds.w + bounds.x
+		vel.x = -vel.x
+	}else if(pos.x < bounds.x){
+		pos.x = bounds.x
+		vel.x = -vel.x
+	}
+	if(pos.y > bounds.h + bounds.y){
+		pos.y = bounds.h + bounds.y
+		vel.y = -vel.y
+	}else if(pos.y < bounds.y){
+		pos.y = bounds.y
+		vel.y = -vel.y
 	}
 }

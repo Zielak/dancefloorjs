@@ -7,8 +7,6 @@ export const rnd = new Chance()
 import Vector from './vector'
 
 import Human from './human/human'
-import HumanSystem from './systems/human'
-import MovementSystem from './systems/movement'
 
 // EXPORTS
 
@@ -36,7 +34,6 @@ state
 const gameLoop = {
 	start: () => {
 		document.removeEventListener('click', gameLoop.start)
-		prepareECS()
 		spawnPeople()
 		console.log('Game Loop > started')
 		requestAnimationFrame(gameLoop.update)
@@ -54,11 +51,6 @@ const gameLoop = {
 	},
 	lastTime: null,
 	delta: null
-}
-
-function prepareECS() {
-	world.addSystem(new HumanSystem())
-	world.addSystem(new MovementSystem())
 }
 
 function spawnPeople() {

@@ -1,14 +1,16 @@
 import { Graphics } from 'pixi.js'
 
 import { world, rnd } from '../game'
-import Actor from '../actor'
+import Entity from '../entity'
 import Vector from '../vector'
 
 import Thirst from './thirst'
+import Hunger from './hunger'
+import Intoxication from './intoxication'
 import Mover from '../components/mover'
 
 
-export default class Human extends Actor {
+export default class Human extends Entity {
 
 	constructor({ pos, realname, age, sex, orientation, status, persona }) {
 		super({ pos })
@@ -42,10 +44,8 @@ export default class Human extends Actor {
 			)
 		}))
 		this.addComponent(new Thirst())
-
-		// this.addComponent(new Hunger())
-		// this.addComponent(new Intoxication())
-
+		this.addComponent(new Hunger())
+		this.addComponent(new Intoxication())
 
 		// add(new components.AIController({ name: 'controller' }));
 		// add(new components.InputAI({ name: 'input' }));
@@ -58,7 +58,6 @@ export default class Human extends Actor {
 		// Debugging
 		// add(new components.HumanVisualSelector({ bounds: new Rectangle(0, 0, width, height) }));
 
-		world.addEntity(this)
 		world.addChild(this.geometry)
 	}
 
