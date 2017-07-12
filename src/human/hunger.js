@@ -6,9 +6,10 @@ export default class Hunger extends Component {
 		super('hunger')
 		this._value = initValue || rnd.floating({ min: 0, max: 0.1 })
 		
-		this.change = 0.001
+		this.change = 0.006
 	}
 
+	get value() {return this._value}
 	set value(v) {
 		this._value = Math.limit(v)
 	}

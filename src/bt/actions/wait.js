@@ -22,7 +22,6 @@ _.tick = function (tick) {
 	var endTime = tick.blackboard.get('endTime', tick.tree.id, this.id)
 
 	if (currTime > endTime) {
-		console.log('DONE')
 		return b3.SUCCESS
 	}
 

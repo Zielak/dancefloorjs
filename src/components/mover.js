@@ -34,8 +34,8 @@ export default class Mover extends Component {
 		this.velocity.add(this.acceleration)
 
 		// TODO: do I need delta fix? It's like 60-80 in here
-		this.realPos.x += this.velocity.x * (dt / 10)
-		this.realPos.y += this.velocity.y * (dt / 10)
+		this.realPos.x += this.velocity.x * dt
+		this.realPos.y += this.velocity.y * dt
 
 		keepInBounds(this.realPos, this.velocity, this.bounds)
 

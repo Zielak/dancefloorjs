@@ -9,7 +9,6 @@ import Vector from './vector'
 import Human from './human/human'
 
 // EXPORTS
-
 export const gameWidth = document.body.offsetWidth
 export const gameHeight = document.body.offsetHeight
 
@@ -54,7 +53,8 @@ const gameLoop = {
 		// Break the loop when we hide
 		if(document.visibilityState === 'hidden') return
 
-		gameLoop.delta = window.performance.now() - gameLoop.lastTime
+		// I want that in seconds i guess
+		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
 
 		world.update(gameLoop.delta)
 		renderer.render(world)
@@ -68,7 +68,7 @@ const gameLoop = {
 }
 
 function spawnPeople() {
-	for (var i = 0; i < 2; i++) {
+	for (var i = 0; i < 1; i++) {
 		spawnGuy()
 	}
 }

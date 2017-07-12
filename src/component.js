@@ -27,10 +27,6 @@ export default class Component {
 		} else {
 			this.system = _systems[this.name]
 		}
-		
-		// Make sure component knows its master
-		this.component._master = this
-		
 	}
 	
 	addedToWorld(world) {
