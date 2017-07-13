@@ -9,6 +9,7 @@ export default class Intoxication extends Component {
 		this.change = 0.011
 	}
 
+	get value() {return this._value}
 	set value(v) {
 		this._value = Math.limit(v)
 	}

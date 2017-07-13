@@ -9,6 +9,7 @@ export default class Thirst extends Component {
 		this.change = 0.015
 	}
 
+	get value() {return this._value}
 	set value(v) {
 		this._value = Math.limit(v)
 	}

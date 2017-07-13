@@ -3,9 +3,7 @@ import * as PIXI from 'pixi.js'
 
 import Chance from 'chance'
 export const rnd = new Chance()
-rnd.float = (min, max) => {
-	rnd.floating({min, max})
-}
+rnd.float = (min, max) => rnd.floating({min, max})
 
 import Vector from './vector'
 
