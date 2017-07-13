@@ -36,7 +36,13 @@ export default class Component {
 	removedFromWorld(world) {
 		this.system.removedFromWorld(world)
 	}
-
+	
+	addedToEntity() {}
+	removedFromEntity() {}
+	
+	get entity() {
+		return this._entity
+	}
 
 	/**
 	 * Update function for each entitie's component

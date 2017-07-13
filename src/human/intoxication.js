@@ -15,6 +15,6 @@ export default class Intoxication extends Component {
 	}
 	
 	update(dt) {
-		this.value += dt * this.change
+		this.value -= dt * this.change
 	}
 }

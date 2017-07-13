@@ -11,12 +11,14 @@ export default class Entity extends CES.Entity {
 
 	addComponent(component) {
 		super.addComponent(component)
-		component.entity = this
+		component._entity = this
+		component.addedToEntity()
 	}
 
 	removeComponent(component) {
-		super.removeComponent(component)
-		component.entity = undefined
+		component.removedFromEntity()
+		super.removeComponent(component.component)
+		component._entity = undefined
 	}
 
 }

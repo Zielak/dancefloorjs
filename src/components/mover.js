@@ -20,9 +20,9 @@ export default class Mover extends Component {
 		this.realPos = new Vector(pos.x || 0, pos.y || 0)
 
 		this.bounds = {
-			x: 0, y: 0,
-			w: gameWidth,
-			h: gameHeight
+			x: 20, y: 60,
+			w: gameWidth-40,
+			h: gameHeight-120
 		}
 	}
 	
@@ -44,6 +44,8 @@ export default class Mover extends Component {
 	}
 
 	postUpdate(){
+		// FIXME: this shouldn't be here
+		// FIXME: it should at least respect child type (don't sort UI or Bubbles)
 		world.children = world.children.sort((a, b)=>{
 			return a.y - b.y
 		})
