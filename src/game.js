@@ -3,6 +3,9 @@ import * as PIXI from 'pixi.js'
 
 import Chance from 'chance'
 export const rnd = new Chance()
+rnd.float = (min, max) => {
+	rnd.floating({min, max})
+}
 
 import Vector from './vector'
 
@@ -76,8 +79,8 @@ function spawnPeople() {
 function spawnGuy() {
 	new Human({
 		pos: new Vector(
-			rnd.floating({ min: 0, max: gameWidth }),
-			rnd.floating({ min: 0, max: gameHeight })
+			rnd.float(0, gameWidth),
+			rnd.float(0, gameHeight)
 		)
 	})
 }

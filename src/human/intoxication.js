@@ -4,7 +4,7 @@ import { rnd } from '../game'
 export default class Intoxication extends Component {
 	constructor(initValue) {
 		super('intoxication')
-		this._value = initValue || rnd.floating({ min: 0, max: 0.2 })
+		this._value = initValue || rnd.float(0, 0.2)
 
 		this.change = 0.011
 	}

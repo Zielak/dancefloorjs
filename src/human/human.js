@@ -19,7 +19,7 @@ export default class Human extends Entity {
 		// this.entityId = manager.createEntity(['Thirst'])
 
 		this.realname = realname || rnd.name()
-		this.age = age || rnd.floating({ min: 16.5, max: 45 })
+		this.age = age || rnd.float(16.5, 45)
 		this.sex = sex || rnd.bool() ? 'male' : 'female'
 		this.orientation = orientation || rnd.pickone([
 			'hetero', 'homo', 'bi'
@@ -38,8 +38,8 @@ export default class Human extends Entity {
 			.endFill()
 
 		let vel = new Vector(
-			rnd.floating({min:-25, max:25}),
-			rnd.floating({min:-25, max:25})
+			rnd.float(-25, 25),
+			rnd.float(-25, 25)
 		)
 		this.addComponent(new Mover({
 			pos: pos,
