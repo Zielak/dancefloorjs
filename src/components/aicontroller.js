@@ -1,6 +1,6 @@
 import * as b3 from 'behavior3js'
 import Component from '../component'
-import {world, rnd} from '../game'
+import { world, rnd } from '../game'
 
 import Wait from '../bt/actions/wait'
 import Logger from '../bt/actions/logger'
@@ -8,12 +8,12 @@ import RandomChild from '../bt/composites/random-child'
 import Condition from '../bt/decorators/condition'
 
 export default class AIController extends Component {
-	constructor(){
+	constructor() {
 		super('aicontroller')
 	}
-	
+
 	addedToEntity() {
-		
+
 		this.tree = new b3.BehaviorTree()
 
 		const humanNeeds = [
@@ -28,7 +28,7 @@ export default class AIController extends Component {
 					message: 'HUNGRY, lets eat',
 					entity: this.entity,
 					// style: 'color: #FFF; font-weight: bold; background-color: #050',
-					
+
 				})
 			}),
 			// THIRST
@@ -76,7 +76,7 @@ export default class AIController extends Component {
 
 		this.hungryTree = new b3.BehaviorTree()
 	}
-	
+
 	update(dt, entity) {
 		this.tree.tick(entity, this.blackboard)
 	}

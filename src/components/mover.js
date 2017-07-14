@@ -1,6 +1,6 @@
 import Component from '../component'
 import Vector from '../vector'
-import {world, gameWidth, gameHeight} from '../game'
+import { world, gameWidth, gameHeight } from '../game'
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity }) {
@@ -21,11 +21,11 @@ export default class Mover extends Component {
 
 		this.bounds = {
 			x: 20, y: 60,
-			w: gameWidth-40,
-			h: gameHeight-120
+			w: gameWidth - 40,
+			h: gameHeight - 120
 		}
 	}
-	
+
 	update(dt, entity) {
 		entity.x = Math.round(this.realPos.x)
 		entity.y = Math.round(this.realPos.y)
@@ -43,10 +43,10 @@ export default class Mover extends Component {
 		this.force.set_xy(0, 0)
 	}
 
-	postUpdate(){
+	postUpdate() {
 		// FIXME: this shouldn't be here
 		// FIXME: it should at least respect child type (don't sort UI or Bubbles)
-		world.children = world.children.sort((a, b)=>{
+		world.children = world.children.sort((a, b) => {
 			return a.y - b.y
 		})
 	}
@@ -67,17 +67,17 @@ export default class Mover extends Component {
 }
 
 function keepInBounds(pos, vel, bounds) {
-	if(pos.x > bounds.w + bounds.x){
+	if (pos.x > bounds.w + bounds.x) {
 		pos.x = bounds.w + bounds.x
 		vel.x = -vel.x
-	}else if(pos.x < bounds.x){
+	} else if (pos.x < bounds.x) {
 		pos.x = bounds.x
 		vel.x = -vel.x
 	}
-	if(pos.y > bounds.h + bounds.y){
+	if (pos.y > bounds.h + bounds.y) {
 		pos.y = bounds.h + bounds.y
 		vel.y = -vel.y
-	}else if(pos.y < bounds.y){
+	} else if (pos.y < bounds.y) {
 		pos.y = bounds.y
 		vel.y = -vel.y
 	}

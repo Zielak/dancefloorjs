@@ -10,12 +10,12 @@ _.parameters = {
 	message: '-silence-',
 	textStyle: {
 		fontSize: 12,
-		
+
 	},
 	entity: undefined,
 }
 
-_.initialize = function(settings) {
+_.initialize = function (settings) {
 	this.message = settings.message || _.parameters.message
 	this.textStyle = settings.textStyle || _.parameters.textStyle
 	this.entity = settings.entity || _.parameters.entity
