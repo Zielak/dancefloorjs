@@ -1,5 +1,3 @@
-import * as b3 from 'behavior3js'
-
 const Condition = b3.Class(b3.Decorator)
 const _ = Condition.prototype
 

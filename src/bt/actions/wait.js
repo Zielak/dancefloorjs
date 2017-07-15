@@ -1,21 +1,24 @@
-import * as b3 from 'behavior3js'
-
-const Wait = b3.Class(b3.Wait)
+const Wait = b3.Class(b3.Action)
 const _ = Wait.prototype
 
 _.name = 'WaitRandom'
 _.parameters = {
-	'milliseconds': 3000,
-	'addRandom': 0,
+	milliseconds: 1000,
+	addRandom: 0,
 }
 
 _.initialize = function(settings) {
+	// b3.Action.prototype.initialize.call(this)
 	this.milliseconds = settings.milliseconds || _.parameters.milliseconds
 	this.addRandom = settings.addRandom || _.parameters.addRandom
 }
 _.open = function (tick) {
+	console.log('opened wait')
 	var endTime = (new Date()).getTime() + this.milliseconds + (Math.random() * this.addRandom)
 	tick.blackboard.set('endTime', endTime, tick.tree.id, this.id)
+}
+_.close = function (tick) {
+	console.log('closed wait')
 }
 _.tick = function (tick) {
 	var currTime = (new Date()).getTime()

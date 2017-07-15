@@ -138,4 +138,8 @@ export default class Vector {
 	get angle2D() {
 		return Math.atan2(this.y, this.x)
 	}
+	setAngle(v){
+		this.angle2D = v
+		return this
+	}
 }

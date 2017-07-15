@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
 	context: path.resolve(__dirname, './src'),
@@ -18,10 +19,15 @@ module.exports = {
 			},
 		]
 	},
-	plugins: [new HtmlWebpackPlugin({
-		title: 'Dancefloor',
-		template: './index.ejs'
-	})],
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Dancefloor',
+			template: './index.ejs'
+		}),
+		new webpack.ProvidePlugin({
+			b3: path.resolve(__dirname, './node_modules/behavior3js/src/index'),
+		})
+	],
 	devtool: 'source-map',
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),

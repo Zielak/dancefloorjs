@@ -1,4 +1,3 @@
-import * as b3 from 'behavior3js'
 import * as PIXI from 'pixi.js'
 import Bubble from '../../components/bubble'
 
@@ -19,7 +18,8 @@ _.initialize = function (settings) {
 	this.background = settings.background || _.parameters.background
 	this.entity = settings.entity || _.parameters.entity
 }
-_.enter = function (tick) {
+_.open = function (tick) {
+	console.log('opened logger')
 	this.entity.addComponent(new Bubble({
 		message: this.message,
 		textStyle: this.textStyle,

@@ -3,7 +3,7 @@ import Vector from '../vector'
 import { world, gameWidth, gameHeight } from '../game'
 
 export default class Mover extends Component {
-	constructor({ pos, acceleration, force, velocity }) {
+	constructor({ pos, acceleration, force, velocity } = {}) {
 		super('mover')
 
 		// Direction-aware velocity
@@ -17,7 +17,7 @@ export default class Mover extends Component {
 		this.force = force || new Vector()
 
 		// Real position of entity, right before it's rounded for view
-		this.realPos = new Vector(pos.x || 0, pos.y || 0)
+		this.realPos = new Vector(pos && pos.x || 0, pos && pos.y || 0)
 
 		this.bounds = {
 			x: 20, y: 60,

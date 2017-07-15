@@ -41,10 +41,7 @@ export default class Human extends Entity {
 			rnd.float(-25, 25),
 			rnd.float(-25, 25)
 		)
-		this.addComponent(new Mover({
-			pos: pos,
-			velocity: vel
-		}))
+		this.addComponent(new Mover({pos}))
 		this.addComponent(new Thirst())
 		this.addComponent(new Hunger())
 		this.addComponent(new Intoxication())

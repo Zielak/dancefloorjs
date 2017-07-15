@@ -1,9 +1,7 @@
-import * as b3 from 'behavior3js'
 import Component from '../component'
 import { world, rnd } from '../game'
 
-import Wait from '../bt/actions/wait'
-import Logger from '../bt/actions/logger'
+import {Wait, Logger, WalkRandomAngle} from '../bt/actions'
 import RandomChild from '../bt/composites/random-child'
 import Condition from '../bt/decorators/condition'
 
@@ -68,9 +66,13 @@ export default class AIController extends Component {
 					milliseconds: 3000,
 					addRandom: 1000
 				}),
-				new RandomChild({
-					children: humanNeeds
-				})
+				new WalkRandomAngle({
+					entity: this.entity,
+					milliseconds: rnd.float(1000, 4000)
+				}),
+				// new RandomChild({
+				// 	children: humanNeeds
+				// }),
 			]
 		})
 

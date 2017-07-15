@@ -3,6 +3,9 @@ import * as PIXI from 'pixi.js'
 
 import Chance from 'chance'
 export const rnd = new Chance()
+/**
+ * Alias to floating
+ */
 rnd.float = (min, max) => rnd.floating({min, max})
 
 import Vector from './vector'
@@ -85,7 +88,7 @@ function sortChildren(container){
 }
 
 function spawnPeople() {
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 1; i++) {
 		spawnGuy()
 	}
 }
