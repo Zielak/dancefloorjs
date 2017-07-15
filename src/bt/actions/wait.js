@@ -8,7 +8,7 @@ _.parameters = {
 }
 
 _.initialize = function(settings) {
-	// b3.Action.prototype.initialize.call(this)
+	b3.Action.prototype.initialize.call(this, settings)
 	this.milliseconds = settings.milliseconds || _.parameters.milliseconds
 	this.addRandom = settings.addRandom || _.parameters.addRandom
 }

@@ -25,6 +25,7 @@ module.exports = {
 			template: './index.ejs'
 		}),
 		new webpack.ProvidePlugin({
+			// TODO: probably disable it for production, and use their dist?
 			b3: path.resolve(__dirname, './node_modules/behavior3js/src/index'),
 		})
 	],

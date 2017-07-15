@@ -13,6 +13,7 @@ _.parameters = {
 }
 
 _.initialize = function (settings) {
+	b3.Action.prototype.initialize.call(this, settings)
 	this.message = settings.message || _.parameters.message
 	this.textStyle = Object.assign({}, _.parameters.textStyle, settings.textStyle || {})
 	this.background = settings.background || _.parameters.background
