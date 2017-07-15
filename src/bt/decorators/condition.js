@@ -1,24 +1,24 @@
-const Condition = b3.Class(b3.Decorator)
-const _ = Condition.prototype
+class Condition extends b3.Decorator{
+	constructor (settings) {
+		super(settings)
+		
+		this.checkCondition = settings.checkCondition || this.parameters.checkCondition
+	}
+	tick (tick) {
+		if (!this.child) {
+			return b3.ERROR
+		}
+		let status = b3.FAILURE
+		if (this.checkCondition()) {
+			status = this.child._execute(tick)
+		}
+		return status
+	}
+}
 
-_.name = 'Condition'
-_.parameters = {
+Condition.prototype.name = 'Condition'
+Condition.prototype.parameters = {
 	checkCondition: () => false,
-}
-
-_.initialize = function (settings) {
-	b3.Decorator.prototype.initialize.call(this, settings)
-	this.checkCondition = settings.checkCondition || _.parameters.checkCondition
-}
-_.tick = function (tick) {
-	if (!this.child) {
-		return b3.ERROR
-	}
-	let status = b3.FAILURE
-	if (this.checkCondition()) {
-		status = this.child._execute(tick)
-	}
-	return status
 }
 
 export default Condition
