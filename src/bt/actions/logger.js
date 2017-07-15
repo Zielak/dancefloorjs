@@ -8,24 +8,24 @@ const _ = Logger.prototype
 _.name = 'Logger'
 _.parameters = {
 	message: '-silence-',
-	textStyle: {
-		fontSize: 12,
-
-	},
+	textStyle: {fill: 0x000000},
+	background: 0xffffff,
 	entity: undefined,
 }
 
 _.initialize = function (settings) {
 	this.message = settings.message || _.parameters.message
-	this.textStyle = settings.textStyle || _.parameters.textStyle
+	this.textStyle = Object.assign({}, _.parameters.textStyle, settings.textStyle || {})
+	this.background = settings.background || _.parameters.background
 	this.entity = settings.entity || _.parameters.entity
 }
 _.enter = function (tick) {
-	this.entity.addComponent(new Bubble(
-		this.message,
-		this.textStyle,
-		new PIXI.Rectangle(-50, 0, 100, 18)
-	))
+	this.entity.addComponent(new Bubble({
+		message: this.message,
+		textStyle: this.textStyle,
+		rectangle: new PIXI.Rectangle(-50, 0, 100, 18),
+		background: this.background
+	}))
 }
 _.tick = function () {
 	if (!this.entity) {

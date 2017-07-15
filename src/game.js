@@ -24,6 +24,12 @@ const _stage = new PIXI.Container()
  */
 export const world = Object.assign(CES.World.prototype, PIXI.Container.prototype, _world, _stage)
 
+/**
+ * Container for all UI stuff
+ */
+export const ui = new PIXI.Container()
+world.addChild(ui)
+
 // LOCALS
 
 const state = {
@@ -58,6 +64,10 @@ const gameLoop = {
 		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
 
 		world.update(gameLoop.delta)
+		world.children = sortChildren(world.children)
+		ui.children = sortChildren(ui.children)
+		world.setChildIndex(ui, world.children.length-1)
+
 		renderer.render(world)
 
 		// Keep the loop going
@@ -66,6 +76,12 @@ const gameLoop = {
 	},
 	lastTime: null,
 	delta: null
+}
+
+function sortChildren(container){
+	return container.sort((a, b) => {
+		return (a.y - b.y)
+	})
 }
 
 function spawnPeople() {

@@ -1,8 +1,12 @@
-import { Graphics, Text } from 'pixi.js'
-import { world } from '../game'
+import { Graphics, Text, Container } from 'pixi.js'
+import { ui } from '../game'
 
 import Component from '../component'
 // import Vector from '../vector'
+
+const defaultTextStyle = { fontSize: 12 }
+const paddingX = 2
+const paddingY = 4
 
 export default class Bubble extends Component {
 	/**
@@ -13,40 +17,50 @@ export default class Bubble extends Component {
 	 * @param {string} [background]
 	 * @memberof Bubble
 	 */
-	constructor(message = '-silence-', textStyle = { fontSize: 12 }, rectangle, background = 0xffffff) {
+	constructor({message = '-silence-', textStyle, rectangle, background = 0xffffff}) {
 		super('bubble')
 
 		this.createdTime = window.performance.now()
-		this.endTime = this.createdTime + message.length * 100
+		this.endTime = this.createdTime + (Math.min(message.length, 10) * 150)
+
+		this.container = new Container()
 
 		this.bgRect = new Graphics()
 		this.bgRect.beginFill(background, 0.9)
 			.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height)
 			.endFill()
 
-		this.text = new Text(message, textStyle)
+		this.text = new Text(message, Object.assign({}, defaultTextStyle, textStyle || {}))
+
+		this.updateSizes(this.bgRect, this.text)
+
+		this.container.addChild(this.bgRect)
+		this.container.addChild(this.text)
 	}
 
 	addedToEntity() {
-		world.addChild(this.bgRect)
-		world.addChild(this.text)
+		ui.addChild(this.container)
 	}
 
 	removedFromEntity() {
-		world.removeChild(this.bgRect)
-		world.removeChild(this.text)
+		ui.removeChild(this.container)
 	}
 
 	update(dt, entity) {
-		this.updatePosition(entity)
+		this.updatePosition(this.bgRect, this.text, entity)
 		this.checkLifeTime(entity)
 	}
 
-	updatePosition(entity) {
-		this.bgRect.x = entity.x
-		this.bgRect.y = entity.y
-		this.text.x = this.bgRect.x - this.bgRect.width / 2
-		this.text.y = this.bgRect.y
+	updatePosition(bg, text, entity) {
+		bg.x = entity.x
+		bg.y = entity.y - entity.height - bg.height
+		text.x = bg.x - bg.width / 2 + paddingX
+		text.y = bg.y + paddingY
+	}
+
+	updateSizes(bg, text) {
+		bg.width = text.width + paddingX*2
+		bg.height = text.height + paddingY*2
 	}
 
 	checkLifeTime(entity) {

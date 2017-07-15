@@ -46,9 +46,6 @@ export default class Mover extends Component {
 	postUpdate() {
 		// FIXME: this shouldn't be here
 		// FIXME: it should at least respect child type (don't sort UI or Bubbles)
-		world.children = world.children.sort((a, b) => {
-			return a.y - b.y
-		})
 	}
 
 	// TODO: Move physics related stuff to components, if needed at all

@@ -27,8 +27,8 @@ export default class AIController extends Component {
 				child: new Logger({
 					message: 'HUNGRY, lets eat',
 					entity: this.entity,
-					// style: 'color: #FFF; font-weight: bold; background-color: #050',
-
+					textStyle: {fill: 0xffffff, fontWeight: 'bold'},
+					background: 0x005500,
 				})
 			}),
 			// THIRST
@@ -41,7 +41,8 @@ export default class AIController extends Component {
 				child: new Logger({
 					message: 'THIRSTY',
 					entity: this.entity,
-					// style: 'color: #FFF; font-weight: bold; background-color: #05F'
+					textStyle: {fill: 0xffffff, fontWeight: 'bold'},
+					background: 0x0055FF,
 				}),
 			}),
 			// INTOXICATION
@@ -55,7 +56,8 @@ export default class AIController extends Component {
 				child: new Logger({
 					message: 'NEED A DRINK',
 					entity: this.entity,
-					// style: 'color: #FF0; font-weight: bold; background-color: #800'
+					textStyle: {fill: 0xffff00, fontWeight: 'bold'},
+					background: 0x880000,
 				}),
 			}),
 		]
