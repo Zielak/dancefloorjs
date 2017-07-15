@@ -62,13 +62,13 @@ export default class AIController extends Component {
 
 		this.tree.root = new b3.Sequence({
 			children: [
-				new Wait({
-					milliseconds: 3000,
-					addRandom: 1000
-				}),
 				new WalkRandomAngle({
 					entity: this.entity,
 					milliseconds: rnd.float(1000, 4000)
+				}),
+				new Wait({
+					milliseconds: 3000,
+					addRandom: 1000
 				}),
 				// new RandomChild({
 				// 	children: humanNeeds

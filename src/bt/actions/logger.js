@@ -5,10 +5,10 @@ class Logger extends b3.Action {
 	constructor(settings) {
 		super(settings)
 		
-		this.message = settings.message || this.parameters.message
-		this.textStyle = Object.assign({}, this.parameters.textStyle, settings.textStyle || {})
-		this.background = settings.background || this.parameters.background
-		this.entity = settings.entity || this.parameters.entity
+		this.message = settings.message || '-silence-'
+		this.textStyle = Object.assign({}, {fill: 0x000000}, settings.textStyle || {})
+		this.background = settings.background || 0xffffff
+		this.entity = settings.entity
 	}
 
 	open(tick) {
@@ -20,7 +20,7 @@ class Logger extends b3.Action {
 			background: this.background
 		}))
 	}
-	
+
 	tick() {
 		if (!this.entity) {
 			return b3.FAILURE
@@ -31,11 +31,5 @@ class Logger extends b3.Action {
 }
 
 Logger.prototype.name = 'Logger'
-Logger.prototype.parameters = {
-	message: '-silence-',
-	textStyle: {fill: 0x000000},
-	background: 0xffffff,
-	entity: undefined,
-}
 
 export default Logger

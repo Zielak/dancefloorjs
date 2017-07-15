@@ -3,8 +3,8 @@ class Wait extends b3.Action {
 	constructor (settings) {
 		super(settings)
 		
-		this.milliseconds = settings.milliseconds || this.parameters.milliseconds
-		this.addRandom = settings.addRandom || this.parameters.addRandom
+		this.milliseconds = settings.milliseconds || 1000
+		this.addRandom = settings.addRandom || 0
 	}
 	open (tick) {
 		console.log('opened wait')
@@ -28,9 +28,5 @@ class Wait extends b3.Action {
 }
 
 Wait.prototype.name = 'WaitRandom'
-Wait.prototype.parameters = {
-	milliseconds: 1000,
-	addRandom: 0,
-}
 
 export default Wait

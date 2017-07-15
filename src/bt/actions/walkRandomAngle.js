@@ -5,9 +5,9 @@ class WalkRandomAngle extends b3.Action {
 	constructor (settings) {
 		super(settings)
 		
-		this.milliseconds = settings.milliseconds || this.parameters.milliseconds
-		this.addRandom = settings.addRandom || this.parameters.addRandom
-		this.entity = settings.entity || this.parameters.entity
+		this.milliseconds = settings.milliseconds || 3000
+		this.addRandom = settings.addRandom || 0
+		this.entity = settings.entity
 	}
 	open (tick) {
 		console.log('opened walkRandom')
