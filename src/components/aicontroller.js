@@ -71,9 +71,9 @@ export default class AIController extends Component {
 					milliseconds: {min:2000, max:3000},
 					addRandom: 1000
 				}),
-				// new RandomChild({
-				// 	children: humanNeeds
-				// }),
+				new RandomChild({
+					children: humanNeeds
+				}),
 			]
 		})
 

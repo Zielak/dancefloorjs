@@ -1,6 +1,8 @@
 import { Graphics } from 'pixi.js'
+import * as Color from 'd3-color'
 
 import { world, rnd } from '../game'
+import {rgb2hex} from '../utils'
 import Entity from '../entity'
 import Vector from '../vector'
 
@@ -33,14 +35,12 @@ export default class Human extends Entity {
 		// TODO: get some better color management. HSL and random hues plz
 		this.geometry = new Graphics()
 		this.geometry
-			.beginFill(rnd.color({ format: '0x' }))
+			.beginFill( rgb2hex(Color.hsl(
+				rnd.float(0,365), rnd.float(0.8,1), rnd.float(0.4,0.6)
+			).rgb()) )
 			.drawRect(-this.width / 2, -this.height, this.width, this.height)
 			.endFill()
 
-		let vel = new Vector(
-			rnd.float(-25, 25),
-			rnd.float(-25, 25)
-		)
 		this.addComponent(new Mover({pos}))
 		this.addComponent(new Thirst())
 		this.addComponent(new Hunger())

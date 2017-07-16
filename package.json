@@ -1,34 +1,35 @@
 {
-	"name": "dancefloor",
-	"version": "0.0.1",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "webpack-dev-server",
-		"build": "webpack",
-		"test": "mocha-webpack --webpack-config webpack.config-test.js test",
-		"test:watch": "mocha-webpack --watch --webpack-config webpack.config-test.js test",
-		"lint": "eslint src"
-	},
-	"author": "Darek Greenly",
-	"license": "ISC",
-	"dependencies": {
-		"behavior3js": "^0.2.2",
-		"chance": "^1.0.10",
-		"ces": "0.0.4",
-		"pixi.js": "^4.5.3",
-		"webpack": "^3.0.0",
-		"webpack-dev-server": "^2.5.0"
-	},
-	"devDependencies": {
-		"css-loader": "^0.28.4",
-		"eslint": "^4.2.0",
-		"html-loader": "^0.4.5",
-		"html-webpack-plugin": "^2.29.0",
-		"json-loader": "^0.5.4",
-		"mocha": "^3.4.2",
-		"mocha-webpack": "^0.7.0",
-		"style-loader": "^0.18.2",
-		"webpack-node-externals": "^1.6.0"
-	}
+  "name": "dancefloor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack",
+    "test": "mocha-webpack --webpack-config webpack.config-test.js test",
+    "test:watch": "mocha-webpack --watch --webpack-config webpack.config-test.js test",
+    "lint": "eslint src"
+  },
+  "author": "Darek Greenly",
+  "license": "ISC",
+  "dependencies": {
+    "behavior3js": "^0.2.2",
+    "ces": "0.0.4",
+    "chance": "^1.0.10",
+    "d3-color": "^1.0.3",
+    "pixi.js": "^4.5.3",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "eslint": "^4.2.0",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.29.0",
+    "json-loader": "^0.5.4",
+    "mocha": "^3.4.2",
+    "mocha-webpack": "^0.7.0",
+    "style-loader": "^0.18.2",
+    "webpack-node-externals": "^1.6.0"
+  }
 }

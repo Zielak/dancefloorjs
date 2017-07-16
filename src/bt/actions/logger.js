@@ -12,7 +12,7 @@ class Logger extends b3.Action {
 	}
 
 	open(tick) {
-		console.log('opened logger')
+		// console.log('opened logger')
 		this.entity.addComponent(new Bubble({
 			message: this.message,
 			textStyle: this.textStyle,
