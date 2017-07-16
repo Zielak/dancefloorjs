@@ -12,6 +12,7 @@ function prepareMap(world) {
 		}
 	}
 	pathfinding.setGrid(tilemap)
+	pathfinding.setAcceptableTiles([0,2,3,4])
 	world.addChild(pathfinding.getDebugGrid())
 }
 
@@ -51,6 +52,11 @@ function getTilemapCell(x, y, width, height) {
 	// Random walls, only on empty space
 	if (fin === 0) {
 		fin = Math.random() > 0.85 ? 1 : fin
+	}
+
+	// Bounds walls
+	if (y===0 || x===0 || y>=1-2/height || x>=1-2/width){
+		fin = 1
 	}
 	return fin
 }

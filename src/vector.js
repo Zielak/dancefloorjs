@@ -100,15 +100,43 @@ export default class Vector {
 		return this.set_xy(this.x / other.x, this.y / other.y)
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param {number} v 
+	 * @returns {Vector}
+	 * @memberof Vector
+	 */
 	addScalar(v) {
 		return this.set_xy(this.x + v, this.y + v)
 	}
+	/**
+	 * 
+	 * 
+	 * @param {number} v 
+	 * @returns {Vector}
+	 * @memberof Vector
+	 */
 	subtractScalar(v) {
 		return this.set_xy(this.x - v, this.y - v)
 	}
+	/**
+	 * 
+	 * 
+	 * @param {number} v 
+	 * @returns {Vector}
+	 * @memberof Vector
+	 */
 	multiplyScalar(v) {
 		return this.set_xy(this.x * v, this.y * v)
 	}
+	/**
+	 * 
+	 * 
+	 * @param {number} v 
+	 * @returns {Vector}
+	 * @memberof Vector
+	 */
 	divideScalar(v) {
 		v != 0 ? this.set_xy(this.x / v, this.y / v) : this.set_xy(0, 0)
 		return this

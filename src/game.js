@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js'
 import Chance from 'chance'
 export const rnd = new Chance()
 rnd.float = (min, max) => rnd.floating({min, max})
+rnd.int = (min, max) => rnd.integer({min, max})
 
 import Vector from './vector'
 import Timer from './timer'
@@ -53,6 +54,8 @@ const gameLoop = {
 		})
 
 		building.prepareMap(world)
+		// pathfinding.enableCornerCutting()
+		pathfinding.enableDiagonals()
 		spawnPeople()
 		console.log('Game Loop > started')
 		gameLoop.resume()
@@ -110,8 +113,8 @@ function spawnPeople() {
 function spawnGuy() {
 	new Human({
 		pos: new Vector(
-			rnd.float(0, gameWidth),
-			rnd.float(0, gameHeight)
+			rnd.float(50, gameWidth-50),
+			rnd.float(50, gameHeight-50)
 		)
 	})
 }

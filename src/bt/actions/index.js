@@ -1,3 +1,5 @@
 export {default as Logger} from './logger'
 export {default as Wait} from './wait'
 export {default as WalkRandomAngle} from './walkRandomAngle'
+export {default as WalkToRandomPoint} from './walkToRandomPoint'
+export {default as WalkTo} from './walkTo'

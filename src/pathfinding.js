@@ -6,9 +6,32 @@ const easystar = new EasyStar.js()
 
 const pathfinding = {
 	GRID_CELL_SIZE: 20,
+	gridWidth: undefined,
+	gridHeight: undefined,
+
+	worldPos2GridPos: (x, y) => {
+		let vec = new Vector()
+		if(x instanceof Vector){
+			vec.set_xy(x.x, x.y)
+		}else{
+			vec.set_xy(x, y)
+		}
+		return vec.divideScalar(pathfinding.GRID_CELL_SIZE).round()
+	},
+	gridPos2WorldPos: (x, y) => {
+		let vec = new Vector()
+		if(x instanceof Vector){
+			vec.set_xy(x.x, x.y)
+		}else{
+			vec.set_xy(x, y)
+		}
+		return vec.multiplyScalar(pathfinding.GRID_CELL_SIZE)
+	},
 
 	engine: easystar,
 	setGrid: twoDimensionalArray => {
+		pathfinding.gridWidth = twoDimensionalArray[0].length
+		pathfinding.gridHeight = twoDimensionalArray.length
 		redrawDebugGrid(twoDimensionalArray)
 		easystar.setGrid(twoDimensionalArray)
 	},
@@ -33,6 +56,8 @@ const pathfinding = {
 		}
 		return easystar.findPath(startX, startY, endX, endY, callback)
 	},
+	enableDiagonals: () => easystar.enableDiagonals(),
+	enableCornerCutting: () => easystar.enableCornerCutting(),
 	calculate: () => easystar.calculate()
 }
 
