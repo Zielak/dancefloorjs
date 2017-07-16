@@ -1,6 +1,6 @@
 import { Graphics, Text, Container } from 'pixi.js'
 import { ui } from '../game'
-
+import Timer from '../timer'
 import Component from '../component'
 // import Vector from '../vector'
 
@@ -20,8 +20,7 @@ export default class Bubble extends Component {
 	constructor({message = '-silence-', textStyle, rectangle, background = 0xffffff}) {
 		super('bubble')
 
-		this.createdTime = window.performance.now()
-		this.endTime = this.createdTime + (Math.min(message.length, 10) * 150)
+		this.timer = new Timer(Math.min(message.length, 10) * 150)
 
 		this.container = new Container()
 
@@ -64,7 +63,7 @@ export default class Bubble extends Component {
 	}
 
 	checkLifeTime(entity) {
-		if (window.performance.now() > this.endTime) {
+		if (this.timer.finished) {
 			entity.removeComponent(this)
 		}
 	}

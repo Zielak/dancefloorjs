@@ -9,6 +9,7 @@ export const rnd = new Chance()
 rnd.float = (min, max) => rnd.floating({min, max})
 
 import Vector from './vector'
+import Timer from './timer'
 
 import Human from './human/human'
 
@@ -24,6 +25,7 @@ const _stage = new PIXI.Container()
 
 /**
  * Marge of PIXI's Container and CES World class.
+ * Do that as long as both API's don't conflict with eachother
  */
 export const world = Object.assign(CES.World.prototype, PIXI.Container.prototype, _world, _stage)
 
@@ -64,7 +66,7 @@ const gameLoop = {
 		gameLoop.paused = false
 		renderer.backgroundColor = 0
 		gameLoop.lastTime = window.performance.now()
-		gameLoop.update()
+		requestAnimationFrame(gameLoop.update)
 	},
 	update: () => {
 		// Break the loop when we hide or paused
@@ -73,6 +75,7 @@ const gameLoop = {
 		// I want that in seconds i guess
 		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
 
+		Timer.update(gameLoop.delta * 1000)
 		world.update(gameLoop.delta)
 		world.children = sortChildren(world.children)
 		ui.children = sortChildren(ui.children)

@@ -25,7 +25,6 @@ class Logger extends b3.Action {
 		if (!this.entity) {
 			return b3.FAILURE
 		}
-		// console.log(`%c ${this.message} `, this.style)
 		return b3.SUCCESS
 	}
 }

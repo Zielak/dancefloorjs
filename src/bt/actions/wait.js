@@ -1,27 +1,39 @@
+import Timer from '../../timer'
+import {rnd} from '../../game'
+
 class Wait extends b3.Action {
 	
 	constructor (settings) {
 		super(settings)
 		
-		this.milliseconds = settings.milliseconds || 1000
+		if(typeof settings.milliseconds === 'object'){
+			this.milliseconds = {
+				min: settings.milliseconds.min,
+				max: settings.milliseconds.max,
+			}
+		}else{
+			this.milliseconds = {
+				min: settings.milliseconds || 1000,
+				max: settings.milliseconds || 1000,
+			}
+		}
 		this.addRandom = settings.addRandom || 0
 	}
 	open (tick) {
-		console.log('opened wait')
-		var endTime = (new Date()).getTime() + this.milliseconds + (Math.random() * this.addRandom)
-		tick.blackboard.set('endTime', endTime, tick.tree.id, this.id)
+		this.timer = new Timer(
+			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
+		)
+		console.log('opened wait: ',this.timer.time)
 	}
 	close (tick) {
 		console.log('closed wait')
+		this.timer && this.timer.stop()
+		this.timer = undefined
 	}
 	tick (tick) {
-		var currTime = (new Date()).getTime()
-		var endTime = tick.blackboard.get('endTime', tick.tree.id, this.id)
-
-		if (currTime > endTime) {
+		if (this.timer.finished) {
 			return b3.SUCCESS
 		}
-
 		return b3.RUNNING
 	}
 

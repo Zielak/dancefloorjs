@@ -1,3 +1,4 @@
+import Timer from '../../timer'
 import {rnd} from '../../game'
 
 class WalkRandomAngle extends b3.Action {
@@ -5,17 +6,28 @@ class WalkRandomAngle extends b3.Action {
 	constructor (settings) {
 		super(settings)
 		
-		this.milliseconds = settings.milliseconds || 3000
+		if(typeof settings.milliseconds === 'object'){
+			this.milliseconds = {
+				min: settings.milliseconds.min,
+				max: settings.milliseconds.max,
+			}
+		}else{
+			this.milliseconds = {
+				min: settings.milliseconds || 3000,
+				max: settings.milliseconds || 3000,
+			}
+		}
 		this.addRandom = settings.addRandom || 0
-		this.entity = settings.entity
+		this.entity = settings.entity || undefined
 	}
 	open (tick) {
-		console.log('opened walkRandom')
-		const endTime = (new Date()).getTime() + this.milliseconds + (Math.random() * this.addRandom)
+		this.timer = new Timer(
+			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
+		)
+		console.log('opened walkRandom: ',this.timer.time)
+
 		const mover = this.entity.getComponent('mover')
 		mover.velocity.set_xy(0, 100).setAngle(rnd.float(0,360))
-
-		tick.blackboard.set('endTime', endTime, tick.tree.id, this.id)
 		tick.blackboard.set('mover', mover, tick.tree.id, this.id)
 	}
 	close (tick) {
@@ -24,13 +36,9 @@ class WalkRandomAngle extends b3.Action {
 		mover.velocity.set_xy(0,0)
 	}
 	tick (tick) {
-		var currTime = (new Date()).getTime()
-		var endTime = tick.blackboard.get('endTime', tick.tree.id, this.id)
-
-		if (currTime > endTime) {
+		if (this.timer.finished) {
 			return b3.SUCCESS
 		}
-
 		return b3.RUNNING
 	}
 }
