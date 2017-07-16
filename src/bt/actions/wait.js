@@ -23,10 +23,10 @@ class Wait extends b3.Action {
 		this.timer = new Timer(
 			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
 		)
-		console.log('opened wait: ',this.timer.time)
+		// console.log('opened wait: ',this.timer.time)
 	}
 	close (tick) {
-		console.log('closed wait')
+		// console.log('closed wait')
 		this.timer && this.timer.stop()
 		this.timer = undefined
 	}

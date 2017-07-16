@@ -29,6 +29,8 @@ export default class Mover extends Component {
 	update(dt, entity) {
 		entity.x = Math.round(this.realPos.x)
 		entity.y = Math.round(this.realPos.y)
+		entity._x = this.realPos.x
+		entity._y = this.realPos.y
 
 		this.velocity.add(this.force)
 		this.velocity.add(this.acceleration)

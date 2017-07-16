@@ -24,14 +24,14 @@ class WalkRandomAngle extends b3.Action {
 		this.timer = new Timer(
 			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
 		)
-		console.log('opened walkRandom: ',this.timer.time)
+		// console.log('opened walkRandom: ',this.timer.time)
 
 		const mover = this.entity.getComponent('mover')
 		mover.velocity.set_xy(0, 100).setAngle(rnd.float(0,360))
 		tick.blackboard.set('mover', mover, tick.tree.id, this.id)
 	}
 	close (tick) {
-		console.log('closing walkRandom')
+		// console.log('closing walkRandom')
 		const mover = tick.blackboard.get('mover', tick.tree.id, this.id)
 		mover.velocity.set_xy(0,0)
 	}

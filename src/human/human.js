@@ -69,6 +69,11 @@ export default class Human extends Entity {
 	get x() { return this.geometry.x }
 	get y() { return this.geometry.y }
 
+	set _x(v) { this.geometry._x = v }
+	set _y(v) { this.geometry._y = v }
+	get _x() { return this.geometry._x }
+	get _y() { return this.geometry._y }
+
 }
 
 /**

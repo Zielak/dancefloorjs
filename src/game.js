@@ -93,13 +93,16 @@ const gameLoop = {
 }
 
 function sortChildren(container){
-	return container.sort((a, b) => {
-		return (a.y - b.y)
+	// return container.sort((a, b) => {
+	// 	return ((a._y || a.y) - (b._y || b.y))
+	// })
+	return container.mergeSort(container, (a,b) => {
+		return ((a._y || a.y) - (b._y || b.y))
 	})
 }
 
 function spawnPeople() {
-	for (var i = 0; i < 1; i++) {
+	for (var i = 0; i < 200; i++) {
 		spawnGuy()
 	}
 }
