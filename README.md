@@ -13,8 +13,9 @@ npm run dev
 ## dependencies
 
 - behavior3js - to stimulate peoples minds
+- CES - entity component system
 - chance - random anything generator
 - d3-color - color manipulation
+- easystarjs - path finding
 - PIXI.js - for drawing
-- CES - entity component system
 - webpack - for building

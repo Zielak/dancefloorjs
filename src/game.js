@@ -3,13 +3,12 @@ import * as PIXI from 'pixi.js'
 
 import Chance from 'chance'
 export const rnd = new Chance()
-/**
- * Alias to floating
- */
 rnd.float = (min, max) => rnd.floating({min, max})
 
 import Vector from './vector'
 import Timer from './timer'
+import pathfinding from './pathfinding'
+import building from './building'
 
 import Human from './human/human'
 
@@ -53,6 +52,7 @@ const gameLoop = {
 			}
 		})
 
+		building.prepareMap(world)
 		spawnPeople()
 		console.log('Game Loop > started')
 		gameLoop.resume()
@@ -76,10 +76,13 @@ const gameLoop = {
 		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
 
 		Timer.update(gameLoop.delta * 1000)
+
 		world.update(gameLoop.delta)
 		world.children = sortChildren(world.children)
 		ui.children = sortChildren(ui.children)
 		world.setChildIndex(ui, world.children.length-1)
+
+		pathfinding.calculate()
 
 		renderer.render(world)
 
@@ -93,9 +96,6 @@ const gameLoop = {
 }
 
 function sortChildren(container){
-	// return container.sort((a, b) => {
-	// 	return ((a._y || a.y) - (b._y || b.y))
-	// })
 	return container.mergeSort(container, (a,b) => {
 		return ((a._y || a.y) - (b._y || b.y))
 	})

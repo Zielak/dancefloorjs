@@ -62,18 +62,18 @@ export default class AIController extends Component {
 
 		this.tree.root = new b3.MemSequence({
 			children: [
-				new WalkRandomAngle({
-					entity: this.entity,
-					milliseconds: {min:1000, max:4000},
-					addRandom: 2000
-				}),
-				new Wait({
-					milliseconds: {min:2000, max:3000},
-					addRandom: 1000
-				}),
-				new RandomChild({
-					children: humanNeeds
-				}),
+				// new WalkRandomAngle({
+				// 	entity: this.entity,
+				// 	milliseconds: {min:1000, max:4000},
+				// 	addRandom: 2000
+				// }),
+				// new Wait({
+				// 	milliseconds: {min:2000, max:3000},
+				// 	addRandom: 1000
+				// }),
+				// new RandomChild({
+				// 	children: humanNeeds
+				// }),
 			]
 		})
 
