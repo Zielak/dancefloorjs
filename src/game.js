@@ -55,13 +55,20 @@ const gameLoop = {
 		console.log('Game Loop > started')
 		gameLoop.resume()
 	},
+	pause: () => {
+		gameLoop.paused = true
+		renderer.backgroundColor = 0x666666
+		renderer.render(world)
+	},
 	resume: () => {
+		gameLoop.paused = false
+		renderer.backgroundColor = 0
 		gameLoop.lastTime = window.performance.now()
-		requestAnimationFrame(gameLoop.update)
+		gameLoop.update()
 	},
 	update: () => {
-		// Break the loop when we hide
-		if(document.visibilityState === 'hidden') return
+		// Break the loop when we hide or paused
+		if(document.visibilityState === 'hidden' || gameLoop.paused) return
 
 		// I want that in seconds i guess
 		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
@@ -78,7 +85,8 @@ const gameLoop = {
 		gameLoop.lastTime = window.performance.now()
 	},
 	lastTime: null,
-	delta: null
+	delta: null,
+	paused: false,
 }
 
 function sortChildren(container){
@@ -106,7 +114,7 @@ export function init() {
 	// document.addEventListener('click', gameLoop.start)
 	gameLoop.start()
 
-	// Debug stuff
+	// Keyboard stuff
 	document.addEventListener('keydown', keyDownHandler)
 }
 
@@ -117,6 +125,9 @@ function keyDownHandler(e) {
 			break
 		case 77: // M
 			console.log('World: ', world)
+			break
+		case 80: // P
+			gameLoop.paused ? gameLoop.resume() : gameLoop.pause()
 			break
 	}
 }
