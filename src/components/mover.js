@@ -26,9 +26,9 @@ export default class Mover extends Component {
 		this.path = []
 
 		this.bounds = {
-			x: 20, y: 60,
-			w: gameWidth - 40,
-			h: gameHeight - 120
+			x: 10, y: 10,
+			w: gameWidth - 20,
+			h: gameHeight - 20
 		}
 	}
 
@@ -45,15 +45,15 @@ export default class Mover extends Component {
 			updatePathMovement(this.path, this.realPos, this.velocity)
 		}
 
-		this.realPos.x += this.velocity.x * dt
-		this.realPos.y += this.velocity.y * dt
-
-		keepInBounds(this.realPos, this.velocity, this.bounds)
-
 		// Speed limit
 		if(this.velocity.length > this.maxSpeed){
 			this.velocity.normalize().multiplyScalar(this.maxSpeed)
 		}
+
+		this.realPos.x += this.velocity.x * dt
+		this.realPos.y += this.velocity.y * dt
+
+		keepInBounds(this.realPos, this.velocity, this.bounds)
 
 		// Reset force back to zero
 		this.force.set_xy(0, 0)
@@ -122,7 +122,8 @@ function updatePathMovement(path, position, velocity){
 		}
 	}
 	// go straight to closest point
-	velocity.x = Math.max(Vector.Subtract(target, current).length, 5)
+	velocity.set_xy(1,1).normalize()
+	velocity.length = Vector.Subtract(target, current).multiplyScalar(100).length
 
 	velocity.angle2D = Math.atan2(current.y - target.y, current.x - target.x) - Math.PI
 }

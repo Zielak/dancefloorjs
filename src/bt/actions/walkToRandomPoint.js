@@ -1,4 +1,5 @@
 import pathfinding from '../../pathfinding'
+import * as utils from '../../utils'
 import {rnd} from '../../game'
 
 class WalkToRandomPoint extends b3.Action {
@@ -9,11 +10,13 @@ class WalkToRandomPoint extends b3.Action {
 		this.entity = settings.entity || undefined
 	}
 	open (tick) {
+		const from = utils.worldPos2GridPos(this.entity.x, this.entity.y)
+		const target = {
+			x: rnd.int(0, pathfinding.gridWidth-1),
+			y: rnd.int(0, pathfinding.gridHeight-1)
+		}
 		pathfinding.findPath(
-			Math.round(this.entity.x/pathfinding.GRID_CELL_SIZE),
-			Math.round(this.entity.y/pathfinding.GRID_CELL_SIZE),
-			rnd.int(0, pathfinding.gridWidth-1),
-			rnd.int(0, pathfinding.gridHeight-1),
+			from.x, from.y, target.x, target.y,
 			foundPath => tick.blackboard.set('path', foundPath, tick.tree.id, this.id)
 		)
 		const mover = this.entity.getComponent('mover')

@@ -70,7 +70,7 @@ export function worldPos2GridPos(x, y){
 	}else{
 		vec.set_xy(x, y)
 	}
-	return vec.divideScalar(pathfinding.GRID_CELL_SIZE).round()
+	return vec.divideScalar(pathfinding.GRID_CELL_SIZE).subtractScalar(0.5).round()
 }
 export function gridPos2WorldPos(x, y){
 	let vec = new Vector()

@@ -24,6 +24,10 @@ function prepareMap(stage) {
 function getTilemapCell(x, y, width, height) {
 	x = x / width
 	y = y / height
+
+	const col = 1/width
+	const row = 1/height
+
 	let fin = 0
 	// Dnacefloor
 	if (
@@ -51,11 +55,11 @@ function getTilemapCell(x, y, width, height) {
 
 	// Random walls, only on empty space
 	if (fin === 0) {
-		fin = Math.random() > 0.85 ? 1 : fin
+		fin = Math.random() > 0.95 ? 1 : fin
 	}
 
 	// Bounds walls
-	if (y===0 || x===0 || y>=1-2/height || x>=1-2/width){
+	if (y<row || x<col || y>1-3*row || x>1-3*col){
 		fin = 1
 	}
 	return fin

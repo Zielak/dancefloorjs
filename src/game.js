@@ -107,8 +107,8 @@ function spawnPeople() {
 function spawnGuy() {
 	new Human({
 		pos: new Vector(
-			rnd.float(50, gameWidth-50),
-			rnd.float(50, gameHeight-50)
+			rnd.float(80, gameWidth-80),
+			rnd.float(80, gameHeight-80)
 		)
 	})
 }
@@ -117,7 +117,7 @@ export function init() {
 	_debugger.init(stage)
 	building.prepareMap(stage)
 	// pathfinding.enableCornerCutting()
-	// pathfinding.enableDiagonals()
+	pathfinding.enableDiagonals()
 	gameLoop.start()
 
 	// Keyboard stuff
