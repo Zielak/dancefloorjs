@@ -1,7 +1,7 @@
 import { Graphics } from 'pixi.js'
 import * as Color from 'd3-color'
 
-import { world, rnd } from '../game'
+import { stage, rnd } from '../game'
 import {rgb2hex} from '../utils'
 import Entity from '../entity'
 import Vector from '../vector'
@@ -33,13 +33,8 @@ export default class Human extends Entity {
 		this.height = 30
 
 		// TODO: get some better color management. HSL and random hues plz
-		this.geometry = new Graphics()
-		this.geometry
-			.beginFill( rgb2hex(Color.hsl(
-				rnd.float(0,365), rnd.float(0.8,1), rnd.float(0.4,0.6)
-			).rgb()) )
-			.drawRect(-this.width / 2, -this.height, this.width, this.height)
-			.endFill()
+		this.geometry = Human.prepareGeometry(this)
+		stage.addChild(this.geometry)
 
 		this.addComponent(new Mover({pos}))
 		this.addComponent(new Thirst())
@@ -61,7 +56,6 @@ export default class Human extends Entity {
 		// Debugging
 		// add(new components.HumanVisualSelector({ bounds: new Rectangle(0, 0, width, height) }));
 
-		world.addChild(this.geometry)
 	}
 
 	set x(v) { this.geometry.x = v }
@@ -73,6 +67,22 @@ export default class Human extends Entity {
 	set _y(v) { this.geometry._y = v }
 	get _x() { return this.geometry._x }
 	get _y() { return this.geometry._y }
+
+	static prepareGeometry(human){
+		const geom = new Graphics()
+		geom
+			.beginFill( rgb2hex(Color.hsl(
+				rnd.float(0,365), rnd.float(0.8,1), rnd.float(0.4,0.6)
+			).rgb()) )
+			.drawRect(-human.width / 2, -human.height, human.width, human.height)
+			.endFill()
+
+		geom.interactive = true
+		geom.on('click', () => {
+			stage.emit('updateHumanDebugger', human)
+		})
+		return geom
+	}
 
 }
 

@@ -1,7 +1,7 @@
 import Component from '../component'
 import Vector from '../vector'
-import pathfinding from '../pathfinding'
-import { world, gameWidth, gameHeight } from '../game'
+import * as utils from '../utils'
+import { gameWidth, gameHeight } from '../game'
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity } = {}) {
@@ -50,7 +50,10 @@ export default class Mover extends Component {
 
 		keepInBounds(this.realPos, this.velocity, this.bounds)
 
-		limitVelocity(this.velocity, this.maxSpeed)
+		// Speed limit
+		if(this.velocity.length > this.maxSpeed){
+			this.velocity.normalize().multiplyScalar(this.maxSpeed)
+		}
 
 		// Reset force back to zero
 		this.force.set_xy(0, 0)
@@ -93,27 +96,35 @@ export default class Mover extends Component {
 	}
 }
 
+/**
+ * 
+ * 
+ * @param {array} path 
+ * @param {Vector} position 
+ * @param {Vector} velocity 
+ */
 function updatePathMovement(path, position, velocity){
 	// check if we're in position yet
-	const current = pathfinding.worldPos2GridPos(position)
+	const current = position.clone()
 
-	let target = path[path.target] || current
+	let target = utils.gridPos2WorldPos(path[path.target] || current)
 
-	if(current.x === target.x && current.y === target.y){
+	if(
+		current.x >= target.x-5 && current.x <= target.x+5 &&
+		current.y >= target.y-5 && current.y <= target.y+5
+	){
 		if(++path.target > path.length-1){
 			path.finished = true
 			return
 		}else{
-			target = path[path.target]
+			target = utils.gridPos2WorldPos(path[path.target])
 			// console.log('went though',target,`${path.length - path.target} points to go`)
 		}
 	}
 	// go straight to closest point
-	if(velocity.length < 100){
-		velocity.x = 100
-	}
-	velocity.angle2D = Math.atan2(current.y - target.y, current.x - target.x) - Math.PI
+	velocity.x = Math.max(Vector.Subtract(target, current).length, 5)
 
+	velocity.angle2D = Math.atan2(current.y - target.y, current.x - target.x) - Math.PI
 }
 
 function keepInBounds(pos, velocity, bounds) {
@@ -131,8 +142,4 @@ function keepInBounds(pos, velocity, bounds) {
 		pos.y = bounds.y
 		velocity.y = -velocity.y
 	}
-}
-
-function limitVelocity(velocity, maxSpeed){
-
 }

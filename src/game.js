@@ -6,10 +6,12 @@ export const rnd = new Chance()
 rnd.float = (min, max) => rnd.floating({min, max})
 rnd.int = (min, max) => rnd.integer({min, max})
 
+import * as utils from './utils'
 import Vector from './vector'
 import Timer from './timer'
 import pathfinding from './pathfinding'
 import building from './building'
+import _debugger from './debugger'
 
 import Human from './human/human'
 
@@ -20,20 +22,14 @@ export const gameHeight = document.body.offsetHeight
 export const renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight)
 document.body.appendChild(renderer.view)
 
-const _world = new CES.World()
-const _stage = new PIXI.Container()
-
-/**
- * Marge of PIXI's Container and CES World class.
- * Do that as long as both API's don't conflict with eachother
- */
-export const world = Object.assign(CES.World.prototype, PIXI.Container.prototype, _world, _stage)
+export const world = new CES.World()
+export const stage = new PIXI.Container()
 
 /**
  * Container for all UI stuff
  */
 export const ui = new PIXI.Container()
-world.addChild(ui)
+stage.addChild(ui)
 
 // LOCALS
 
@@ -52,10 +48,6 @@ const gameLoop = {
 				gameLoop.resume()
 			}
 		})
-
-		building.prepareMap(world)
-		// pathfinding.enableCornerCutting()
-		pathfinding.enableDiagonals()
 		spawnPeople()
 		console.log('Game Loop > started')
 		gameLoop.resume()
@@ -63,7 +55,7 @@ const gameLoop = {
 	pause: () => {
 		gameLoop.paused = true
 		renderer.backgroundColor = 0x666666
-		renderer.render(world)
+		renderer.render(stage)
 	},
 	resume: () => {
 		gameLoop.paused = false
@@ -81,13 +73,15 @@ const gameLoop = {
 		Timer.update(gameLoop.delta * 1000)
 
 		world.update(gameLoop.delta)
-		world.children = sortChildren(world.children)
+
+		stage.children = sortChildren(stage.children)
 		ui.children = sortChildren(ui.children)
-		world.setChildIndex(ui, world.children.length-1)
+		stage.setChildIndex(ui, stage.children.length-1)
 
 		pathfinding.calculate()
+		_debugger.update()
 
-		renderer.render(world)
+		renderer.render(stage)
 
 		// Keep the loop going
 		requestAnimationFrame(gameLoop.update)
@@ -99,7 +93,7 @@ const gameLoop = {
 }
 
 function sortChildren(container){
-	return container.mergeSort(container, (a,b) => {
+	return utils.mergeSort(container, (a,b) => {
 		return ((a._y || a.y) - (b._y || b.y))
 	})
 }
@@ -120,7 +114,10 @@ function spawnGuy() {
 }
 
 export function init() {
-	// document.addEventListener('click', gameLoop.start)
+	_debugger.init(stage)
+	building.prepareMap(stage)
+	// pathfinding.enableCornerCutting()
+	// pathfinding.enableDiagonals()
 	gameLoop.start()
 
 	// Keyboard stuff

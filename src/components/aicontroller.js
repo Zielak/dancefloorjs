@@ -1,5 +1,5 @@
 import Component from '../component'
-import { world, rnd } from '../game'
+import { rnd } from '../game'
 
 import {
 	Wait, Logger, WalkRandomAngle, WalkToRandomPoint, WalkTo

@@ -1,7 +1,7 @@
 import { gameHeight, gameWidth } from './game'
 import pathfinding from './pathfinding'
 
-function prepareMap(world) {
+function prepareMap(stage) {
 	const tilemap = []
 	const gridCols = parseInt(gameWidth / pathfinding.GRID_CELL_SIZE)
 	const gridRows = parseInt(gameHeight / pathfinding.GRID_CELL_SIZE)
@@ -13,7 +13,7 @@ function prepareMap(world) {
 	}
 	pathfinding.setGrid(tilemap)
 	pathfinding.setAcceptableTiles([0,2,3,4])
-	world.addChild(pathfinding.getDebugGrid())
+	stage.addChild(pathfinding.getDebugGrid())
 }
 
 // 0 - floor

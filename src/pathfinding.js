@@ -9,25 +9,6 @@ const pathfinding = {
 	gridWidth: undefined,
 	gridHeight: undefined,
 
-	worldPos2GridPos: (x, y) => {
-		let vec = new Vector()
-		if(x instanceof Vector){
-			vec.set_xy(x.x, x.y)
-		}else{
-			vec.set_xy(x, y)
-		}
-		return vec.divideScalar(pathfinding.GRID_CELL_SIZE).round()
-	},
-	gridPos2WorldPos: (x, y) => {
-		let vec = new Vector()
-		if(x instanceof Vector){
-			vec.set_xy(x.x, x.y)
-		}else{
-			vec.set_xy(x, y)
-		}
-		return vec.multiplyScalar(pathfinding.GRID_CELL_SIZE)
-	},
-
 	engine: easystar,
 	setGrid: twoDimensionalArray => {
 		pathfinding.gridWidth = twoDimensionalArray[0].length

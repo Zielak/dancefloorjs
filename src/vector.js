@@ -170,4 +170,57 @@ export default class Vector {
 		this.angle2D = v
 		return this
 	}
+
+	/**
+	 * STATIC FUNCTIONS
+	 */
+	static Add(a, b) {
+		return new Vector(
+			a.x + b.x,
+			a.y + b.y,
+			a.z + b.z
+		)
+	}
+	static AddScalar(a, b) {
+		return new Vector(
+			a.x + b,
+			a.y + b
+		)
+	}
+	static Subtract(a, b) {
+		return new Vector(
+			a.x - b.x,
+			a.y - b.y
+		)
+	}
+	static SubtractScalar(a, b) {
+		return new Vector(
+			a.x - b,
+			a.y - b
+		)
+	}
+	static MultiplyVector(a, b) {
+		return new Vector(
+			a.x * b.x,
+			a.y * b.y
+		)
+	}
+	static DivideVector(a, b) {
+		return new Vector(
+			a.x / b.x,
+			a.y / b.y
+		)
+	}
+	static Multiply(a, b) {
+		return new Vector(
+			a.x * b,
+			a.y * b
+		)
+	}
+	static Divide(a, b) {
+		return new Vector(
+			a.x / b,
+			a.y / b
+		)
+	}
 }
