@@ -99,13 +99,17 @@ function sortChildren(container){
 }
 
 function spawnPeople() {
-	for (var i = 0; i < 100; i++) {
-		spawnGuy()
+	for (let i = 0; i < 100; i++) {
+		if(i===0){
+			stage.emit('updateHumanDebugger', spawnGuy())
+		}else{
+			spawnGuy()
+		}
 	}
 }
 
 function spawnGuy() {
-	new Human({
+	return new Human({
 		pos: new Vector(
 			rnd.float(80, gameWidth-80),
 			rnd.float(80, gameHeight-80)
