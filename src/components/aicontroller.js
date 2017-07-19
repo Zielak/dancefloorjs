@@ -1,5 +1,5 @@
 import Component from '../component'
-import { rnd } from '../game'
+import Game from '../game'
 
 import {
 	Wait, Logger, WalkRandomAngle, WalkToRandomPoint, WalkTo
@@ -23,7 +23,7 @@ export default class AIController extends Component {
 				checkCondition: () => {
 					const hunger = this.entity.getComponent('hunger')
 					// console.log(`hunger = ${hunger.value}`)
-					return hunger.value >= rnd.float(0.7, 0.85)
+					return hunger.value >= Game.rnd.float(0.7, 0.85)
 				},
 				child: new b3.Sequence({
 					children: [
@@ -46,7 +46,7 @@ export default class AIController extends Component {
 				checkCondition: () => {
 					const thirst = this.entity.getComponent('thirst')
 					// console.log(`thirst = ${thirst.value}`)
-					return thirst.value >= rnd.float(0.7, 0.85)
+					return thirst.value >= Game.rnd.float(0.7, 0.85)
 				},
 				child: new b3.Sequence({
 					children: [
@@ -70,7 +70,7 @@ export default class AIController extends Component {
 					const intoxication = this.entity.getComponent('intoxication')
 					// console.log(`intoxication = ${intoxication.value}`)
 					// TODO: check persona, if a guy WANTS to drink/get high
-					return intoxication.value <= rnd.float(0, 0.3)
+					return intoxication.value <= Game.rnd.float(0, 0.3)
 				},
 				child: new b3.Sequence({
 					children: [

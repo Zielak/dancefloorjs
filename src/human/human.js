@@ -1,7 +1,7 @@
 import { Graphics } from 'pixi.js'
 import * as Color from 'd3-color'
 
-import { stage, rnd } from '../game'
+import Game from '../game'
 import {rgb2hex} from '../utils'
 import Entity from '../entity'
 import Vector from '../vector'
@@ -20,13 +20,13 @@ export default class Human extends Entity {
 
 		// this.entityId = manager.createEntity(['Thirst'])
 
-		this.realname = realname || rnd.name()
-		this.age = age || rnd.float(16.5, 45)
-		this.sex = sex || rnd.bool() ? 'male' : 'female'
-		this.orientation = orientation || rnd.pickone([
+		this.realname = realname || Game.rnd.name()
+		this.age = age || Game.rnd.float(16.5, 45)
+		this.sex = sex || Game.rnd.bool() ? 'male' : 'female'
+		this.orientation = orientation || Game.rnd.pickone([
 			'hetero', 'homo', 'bi'
 		])
-		this.status = status || rnd.pickone(['engaged', 'single'])
+		this.status = status || Game.rnd.pickone(['engaged', 'single'])
 		this.persona = persona || Persona({})
 
 		this.width = 12
@@ -34,7 +34,7 @@ export default class Human extends Entity {
 
 		// TODO: get some better color management. HSL and random hues plz
 		this.geometry = Human.prepareGeometry(this)
-		stage.addChild(this.geometry)
+		Game.stage.addChild(this.geometry)
 
 		this.addComponent(new Mover({pos}))
 		this.addComponent(new Thirst())
@@ -72,14 +72,14 @@ export default class Human extends Entity {
 		const geom = new Graphics()
 		geom
 			.beginFill( rgb2hex(Color.hsl(
-				rnd.float(0,365), rnd.float(0.8,1), rnd.float(0.4,0.6)
+				Game.rnd.float(0,365), Game.rnd.float(0.8,1), Game.rnd.float(0.4,0.6)
 			).rgb()) )
 			.drawRect(-human.width / 2, -human.height, human.width, human.height)
 			.endFill()
 
 		geom.interactive = true
 		geom.on('click', () => {
-			stage.emit('updateHumanDebugger', human)
+			Game.stage.emit('updateHumanDebugger', human)
 		})
 		return geom
 	}
@@ -97,8 +97,8 @@ export default class Human extends Entity {
  */
 function Persona({ introExtroVert, braveShy, peacefulAggressive }) {
 	return new Map([
-		['introExtroVert', introExtroVert || rnd.random()],
-		['braveShy', braveShy || rnd.random()],
-		['peacefulAggressive', peacefulAggressive || rnd.random()],
+		['introExtroVert', introExtroVert || Game.rnd.random()],
+		['braveShy', braveShy || Game.rnd.random()],
+		['peacefulAggressive', peacefulAggressive || Game.rnd.random()],
 	])
 }

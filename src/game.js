@@ -1,134 +1,141 @@
+// External dependencies
 import CES from 'ces'
 import * as PIXI from 'pixi.js'
-
 import Chance from 'chance'
-export const rnd = new Chance()
-rnd.float = (min, max) => rnd.floating({min, max})
-rnd.int = (min, max) => rnd.integer({min, max})
 
+const rnd = new Chance()
+rnd.float = (min, max) => rnd.floating({ min, max })
+rnd.int = (min, max) => rnd.integer({ min, max })
+
+// Internal dependencies
 import * as utils from './utils'
 import Vector from './vector'
 import Timer from './timer'
 import pathfinding from './pathfinding'
 import building from './building'
-import _debugger from './debugger'
+import visualDebugger from './visualDebugger'
 
 import Human from './human/human'
 
-// EXPORTS
-export const gameWidth = document.body.offsetWidth
-export const gameHeight = document.body.offsetHeight
+const gameWidth = document.body.offsetWidth
+const gameHeight = document.body.offsetHeight
 
-export const renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight)
+const renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight)
 document.body.appendChild(renderer.view)
 
-export const world = new CES.World()
-export const stage = new PIXI.Container()
+const world = new CES.World()
+const stage = new PIXI.Container()
 
 /**
  * Container for all UI stuff
  */
-export const ui = new PIXI.Container()
+const ui = new PIXI.Container()
 stage.addChild(ui)
 
-// LOCALS
-
 const state = {
-	BPM: 128
-}
-state
+	BPM: 128,
 
-const gameLoop = {
-	start: () => {
-		document.removeEventListener('click', gameLoop.start)
-
-		document.addEventListener('visibilitychange', () => {
-			// Start the loop again when browser tab becomes active
-			if(document.visibilityState === 'visible'){
-				gameLoop.resume()
-			}
-		})
-		spawnPeople()
-		console.log('Game Loop > started')
-		gameLoop.resume()
-	},
-	pause: () => {
-		gameLoop.paused = true
-		renderer.backgroundColor = 0x666666
-		renderer.render(stage)
-	},
-	resume: () => {
-		gameLoop.paused = false
-		renderer.backgroundColor = 0
-		gameLoop.lastTime = window.performance.now()
-		requestAnimationFrame(gameLoop.update)
-	},
-	update: () => {
-		// Break the loop when we hide or paused
-		if(document.visibilityState === 'hidden' || gameLoop.paused) return
-
-		// I want that in seconds i guess
-		gameLoop.delta = (window.performance.now() - gameLoop.lastTime) / 1000
-
-		Timer.update(gameLoop.delta * 1000)
-
-		world.update(gameLoop.delta)
-
-		stage.children = sortChildren(stage.children)
-		ui.children = sortChildren(ui.children)
-		stage.setChildIndex(ui, stage.children.length-1)
-
-		pathfinding.calculate()
-		_debugger.update()
-
-		renderer.render(stage)
-
-		// Keep the loop going
-		requestAnimationFrame(gameLoop.update)
-		gameLoop.lastTime = window.performance.now()
-	},
 	lastTime: null,
 	delta: null,
 	paused: false,
 }
 
-function sortChildren(container){
-	return utils.mergeSort(container, (a,b) => {
-		return ((a._y || a.y) - (b._y || b.y))
-	})
-}
+/**
+ * Stards the game with bunch of people
+ * 
+ */
+function start() {
+	document.removeEventListener('click', start)
 
-function spawnPeople() {
-	for (let i = 0; i < 100; i++) {
-		if(i===0){
-			stage.emit('updateHumanDebugger', spawnGuy())
-		}else{
-			spawnGuy()
+	// Start the loop again when browser tab becomes active
+	document.addEventListener('visibilitychange', () => {
+		if (document.visibilityState === 'visible') {
+			resume()
 		}
-	}
-}
-
-function spawnGuy() {
-	return new Human({
+	})
+	const spawnGuy = () => new Human({
 		pos: new Vector(
-			rnd.float(80, gameWidth-80),
-			rnd.float(80, gameHeight-80)
+			rnd.float(80, gameWidth - 80),
+			rnd.float(80, gameHeight - 80)
 		)
 	})
+	
+	const spawnPeople = () => {
+		for (let i = 0; i < 100; i++) {
+			if (i === 0) {
+				stage.emit('updateHumanDebugger', spawnGuy())
+			} else {
+				spawnGuy()
+			}
+		}
+	}
+
+	spawnPeople()
+
+	console.log('Game Loop > started')
+	resume()
 }
 
-export function init() {
-	_debugger.init(stage)
+/**
+ * Pauses the game loop
+ */
+function pause() {
+	state.paused = true
+	renderer.backgroundColor = 0x666666
+	renderer.render(stage)
+}
+
+/**
+ * Resumes the game loop
+ */
+function resume() {
+	state.paused = false
+	renderer.backgroundColor = 0
+	state.lastTime = window.performance.now()
+	requestAnimationFrame(update)
+}
+
+function update() {
+	// Break the loop when we hide or paused
+	if (document.visibilityState === 'hidden' || state.paused) return
+
+	// I want that in seconds i guess
+	state.delta = (window.performance.now() - state.lastTime) / 1000
+
+	Timer.update(state.delta * 1000)
+
+	world.update(state.delta)
+
+	// Sort children
+	stage.children = utils.sortChildren(stage.children)
+	ui.children = utils.sortChildren(ui.children)
+	stage.setChildIndex(ui, stage.children.length - 1)
+
+	pathfinding.calculate()
+	visualDebugger.update()
+
+	renderer.render(stage)
+
+	// Keep the loop going
+	requestAnimationFrame(update)
+	state.lastTime = window.performance.now()
+}
+
+/**
+ * Starts the game loop, initializes other mechanics
+ */
+function init() {
+	visualDebugger.init(stage)
 	building.prepareMap(stage)
 	// pathfinding.enableCornerCutting()
 	pathfinding.enableDiagonals()
-	gameLoop.start()
+	start()
 
 	// Keyboard stuff
-	document.addEventListener('keydown', keyDownHandler)
+	document.addEventListener('keydown', _keyDownHandler)
 }
 
-function keyDownHandler(e) {
+function _keyDownHandler(e) {
 	switch (e.which) {
 		case 72: // H
 			console.log('All humans: ', world._entities.toArray())
@@ -137,7 +144,20 @@ function keyDownHandler(e) {
 			console.log('World: ', world)
 			break
 		case 80: // P
-			gameLoop.paused ? gameLoop.resume() : gameLoop.pause()
+			state.paused ? resume() : pause()
 			break
 	}
+}
+
+
+export default {
+	gameWidth,
+	gameHeight,
+	renderer,
+	world,
+	stage,
+	ui,
+	rnd,
+
+	init,
 }

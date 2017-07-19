@@ -1,5 +1,5 @@
 import Timer from '../../timer'
-import {rnd} from '../../game'
+import Game from '../../game'
 
 class WalkRandomAngle extends b3.Action {
 
@@ -22,12 +22,12 @@ class WalkRandomAngle extends b3.Action {
 	}
 	open (tick) {
 		this.timer = new Timer(
-			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
+			Game.rnd.float(this.milliseconds.min, this.milliseconds.max) + Game.rnd.float(0, this.addRandom)
 		)
 		// console.log('opened walkRandom: ',this.timer.time)
 
 		const mover = this.entity.getComponent('mover')
-		mover.velocity.set_xy(0, 100).setAngle(rnd.float(0,360))
+		mover.velocity.set_xy(0, 100).setAngle(Game.rnd.float(0,360))
 		tick.blackboard.set('mover', mover, tick.tree.id, this.id)
 	}
 	close (tick) {

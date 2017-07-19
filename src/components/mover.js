@@ -1,7 +1,7 @@
 import Component from '../component'
 import Vector from '../vector'
 import * as utils from '../utils'
-import { gameWidth, gameHeight } from '../game'
+import Game from '../game'
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity } = {}) {
@@ -27,8 +27,8 @@ export default class Mover extends Component {
 
 		this.bounds = {
 			x: 10, y: 10,
-			w: gameWidth - 20,
-			h: gameHeight - 20
+			w: Game.gameWidth - 20,
+			h: Game.gameHeight - 20
 		}
 	}
 

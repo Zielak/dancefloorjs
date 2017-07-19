@@ -1,4 +1,4 @@
-import {world} from './game'
+import Game from './game'
 import CES from 'ces'
 
 const _systems = {}
@@ -23,7 +23,7 @@ export default class Component {
 				this._postUpdate(dt)
 			}
 			this.system = _systems[this.name]
-			world.addSystem(this.system)
+			Game.world.addSystem(this.system)
 		} else {
 			this.system = _systems[this.name]
 		}
@@ -60,12 +60,12 @@ export default class Component {
 	 * @memberof Component
 	 */
 	_postUpdate() {
-		!!this.postUpdate && this.postUpdate(world.getEntities([this.name]))
+		!!this.postUpdate && this.postUpdate(Game.world.getEntities([this.name]))
 	}
 }
 
 function updateComponents(dt, name) {
-	world.getEntities(name).forEach(ent => {
+	Game.world.getEntities(name).forEach(ent => {
 		let comp = ent.getComponent(name)
 		comp.update(dt, ent)
 	})

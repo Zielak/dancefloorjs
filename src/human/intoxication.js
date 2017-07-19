@@ -1,10 +1,10 @@
 import Component from '../component'
-import { rnd } from '../game'
+import Game from '../game'
 
 export default class Intoxication extends Component {
 	constructor(initValue) {
 		super('intoxication')
-		this._value = initValue || rnd.float(0, 0.2)
+		this._value = initValue || Game.rnd.float(0, 0.2)
 
 		this.change = 0.011
 	}

@@ -1,10 +1,10 @@
-import { gameHeight, gameWidth } from './game'
+import Game from './game'
 import pathfinding from './pathfinding'
 
 function prepareMap(stage) {
 	const tilemap = []
-	const gridCols = parseInt(gameWidth / pathfinding.GRID_CELL_SIZE)
-	const gridRows = parseInt(gameHeight / pathfinding.GRID_CELL_SIZE)
+	const gridCols = parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE)
+	const gridRows = parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)
 	for (let y = 0; y < gridRows; y++) {
 		tilemap[y] = []
 		for (let x = 0; x < gridCols; x++) {

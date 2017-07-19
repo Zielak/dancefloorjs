@@ -81,3 +81,16 @@ export function gridPos2WorldPos(x, y){
 	}
 	return vec.multiplyScalar(pathfinding.GRID_CELL_SIZE).addScalar(pathfinding.GRID_CELL_SIZE/2)
 }
+
+/**
+ * Sorts all children in the container by their true `y` position
+ * 
+ * @export
+ * @param {Array} container 
+ * @returns {Array} of all PIXI stuff from the Container
+ */
+export function sortChildren(container) {
+	return mergeSort(container, (a, b) => {
+		return ((a._y || a.y) - (b._y || b.y))
+	})
+}

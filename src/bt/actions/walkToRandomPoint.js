@@ -1,19 +1,19 @@
 import pathfinding from '../../pathfinding'
 import * as utils from '../../utils'
-import {rnd} from '../../game'
+import Game from '../../game'
 
 class WalkToRandomPoint extends b3.Action {
 
 	constructor (settings) {
-		super(settings)
+		super({name: 'WalkToRandomPoint'})
 		
 		this.entity = settings.entity || undefined
 	}
 	open (tick) {
 		const from = utils.worldPos2GridPos(this.entity.x, this.entity.y)
 		const target = {
-			x: rnd.int(0, pathfinding.gridWidth-1),
-			y: rnd.int(0, pathfinding.gridHeight-1)
+			x: Game.rnd.int(0, pathfinding.gridWidth-1),
+			y: Game.rnd.int(0, pathfinding.gridHeight-1)
 		}
 		pathfinding.findPath(
 			from.x, from.y, target.x, target.y,
@@ -41,13 +41,6 @@ class WalkToRandomPoint extends b3.Action {
 		}
 		return b3.RUNNING
 	}
-}
-
-WalkToRandomPoint.prototype.name = 'WalkToRandomPoint'
-WalkToRandomPoint.prototype.parameters = {
-	milliseconds: 3000,
-	addRandom: 0,
-	entity: undefined,
 }
 
 export default WalkToRandomPoint

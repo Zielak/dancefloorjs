@@ -1,5 +1,5 @@
 import Timer from '../../timer'
-import {rnd} from '../../game'
+import Game from '../../game'
 
 class Wait extends b3.Action {
 	
@@ -21,7 +21,7 @@ class Wait extends b3.Action {
 	}
 	open (tick) {
 		this.timer = new Timer(
-			rnd.float(this.milliseconds.min, this.milliseconds.max) + rnd.float(0, this.addRandom)
+			Game.rnd.float(this.milliseconds.min, this.milliseconds.max) + Game.rnd.float(0, this.addRandom)
 		)
 		// console.log('opened wait: ',this.timer.time)
 	}

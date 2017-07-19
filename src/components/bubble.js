@@ -1,5 +1,5 @@
 import { Graphics, Text, Container } from 'pixi.js'
-import { ui } from '../game'
+import Game from '../game'
 import Timer from '../timer'
 import Component from '../component'
 // import Vector from '../vector'
@@ -38,11 +38,11 @@ export default class Bubble extends Component {
 	}
 
 	addedToEntity() {
-		ui.addChild(this.container)
+		Game.ui.addChild(this.container)
 	}
 
 	removedFromEntity() {
-		ui.removeChild(this.container)
+		Game.ui.removeChild(this.container)
 	}
 
 	update(dt, entity) {

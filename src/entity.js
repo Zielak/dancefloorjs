@@ -1,4 +1,4 @@
-import {world} from './game'
+import Game from './game'
 import CES from 'ces'
 
 export default class Entity extends CES.Entity {
@@ -6,7 +6,7 @@ export default class Entity extends CES.Entity {
 	constructor(){
 		super()
 		
-		world.addEntity(this)
+		Game.world.addEntity(this)
 	}
 
 	addComponent(component) {
