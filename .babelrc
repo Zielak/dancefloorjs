@@ -1,6 +1,7 @@
 {
   "presets": [
-		"@ava/stage-4",
-		"@ava/transform-test-files"
-	]
+    "@ava/stage-4",
+    "@ava/transform-test-files"
+  ],
+  "sourceMaps": "inline"
 }
