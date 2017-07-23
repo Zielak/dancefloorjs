@@ -2,13 +2,20 @@
 
 trying to re-create my [dancefloor simulator in ES6](https://github.com/Zielak/dancefloor/)
 
-## test it
+## run it
 
 ```
 npm install
-npm run dev
+npm start
 ```
 
+and open `localhost:8080`
+
+## test it
+
+```
+npm run test
+```
 
 ## dependencies
 
@@ -17,5 +24,7 @@ npm run dev
 - chance - random anything generator
 - d3-color - color manipulation
 - easystarjs - path finding
-- PIXI.js - for drawing
-- webpack - for building
+- PIXI.js - for rendering
+
+- webpack - bundling
+- ava - test runner and assertions
