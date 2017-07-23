@@ -13,7 +13,7 @@
   "author": "Darek Greenly",
   "license": "ISC",
   "dependencies": {
-    "behavior3js": "^0.2.2",
+    "behavior3js": "git+ssh://git@github.com/Zielak/behavior3js.git",
     "ces": "0.0.4",
     "chance": "^1.0.10",
     "d3-color": "^1.0.3",
