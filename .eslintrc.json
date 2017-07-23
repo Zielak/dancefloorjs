@@ -7,10 +7,17 @@
 	"globals": {
 		"b3": true
 	},
-	"extends": "eslint:recommended",
+	"extends": [
+		"eslint:recommended",
+		"plugin:ava/recommended"
+	],
 	"parserOptions": {
+		"ecmaVersion": 2017,
 		"sourceType": "module"
 	},
+	"plugins": [
+		"ava"
+	],
 	"rules": {
 		"indent": [
 			"error",
