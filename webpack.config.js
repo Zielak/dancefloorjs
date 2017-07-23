@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Visualizer = require('webpack-visualizer-plugin')
 const webpack = require('webpack')
 
 module.exports = {
@@ -14,6 +15,11 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.js$/,
+				exclude: /(node_modules)/,
+				use: ['babel-loader'],
+			},
+			{
 				test: /\.css$/,
 				use: ['style-loader', 'css-loader'],
 			},
@@ -27,7 +33,8 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			// TODO: probably disable it for production, and use their dist?
 			b3: path.resolve(__dirname, './node_modules/behavior3js/src/index'),
-		})
+		}),
+		new Visualizer()
 	],
 	devtool: 'source-map',
 	devServer: {

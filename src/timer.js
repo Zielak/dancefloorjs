@@ -7,7 +7,7 @@ export default class Timer {
 	 * @param {number} time 
 	 * @memberof Timer
 	 */
-	constructor(time){
+	constructor(time = 0){
 		this.counter = 0
 		this.time = time
 		this.running = true
@@ -44,16 +44,43 @@ export default class Timer {
 		this.run()
 	}
 
+	/**
+	 * Call this with given delta
+	 * 
+	 * @static
+	 * @param {number} dt delta time since last update
+	 * @memberof Timer
+	 */
 	static update(dt){
 		_timers.forEach(el => {
 			el._update(dt)
 		})
 	}
 
+	/**
+	 * Factory for new Timer instance
+	 * 
+	 * @static
+	 * @param {number} time 
+	 * @param {Function} fun function to call after timer is finished
+	 * @returns 
+	 * @memberof Timer
+	 */
 	static delay(time, fun){
 		const t = new Timer(time)
 		t.run = fun
 
 		return t
+	}
+
+	/**
+	 * Stops all timers immediatelly, ignoring their results
+	 * no callbacks should be called
+	 * 
+	 * @static
+	 * @memberof Timer
+	 */
+	static clear(){
+		_timers.forEach(el => el.stop())
 	}
 }
