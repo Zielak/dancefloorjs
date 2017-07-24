@@ -22,7 +22,7 @@ export default class Human extends Entity {
 
 		this.realname = realname || Game.rnd.name()
 		this.age = age || Game.rnd.float(16.5, 45)
-		this.sex = sex || Game.rnd.bool() ? 'male' : 'female'
+		this.sex = sex === undefined ? (Game.rnd.bool() ? 'male' : 'female') : sex
 		this.orientation = orientation || Game.rnd.pickone([
 			'hetero', 'homo', 'bi'
 		])
@@ -32,7 +32,6 @@ export default class Human extends Entity {
 		this.width = 12
 		this.height = 30
 
-		// TODO: get some better color management. HSL and random hues plz
 		this.geometry = Human.prepareGeometry(this)
 		Game.stage.addChild(this.geometry)
 
@@ -47,8 +46,6 @@ export default class Human extends Entity {
 
 		// add(new components.AIController({ name: 'controller' }));
 		// add(new components.InputAI({ name: 'input' }));
-
-		// add(new components.MoverWalking());
 
 		// add(new components.Appearance());
 

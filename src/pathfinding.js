@@ -1,6 +1,7 @@
 import EasyStar from 'easystarjs'
 import Vector from './vector'
-import {Container, Graphics} from 'pixi.js'
+import { Container, Graphics } from 'pixi.js'
+import { FLOOR, WALL, DANCEFLOOR, DRINKBAR, FOODBAR, } from './building'
 
 const easystar = new EasyStar.js()
 
@@ -78,12 +79,13 @@ function redrawDebugGrid(grid){
 }
 
 function getCellColor(value){
-	switch(value){
-		case 1: return 0x000000
-		case 2: return 0x441133
-		case 3: return 0x113355
-		case 4: return 0x114422
+	switch (value) {
+		case FLOOR: return 0x333333
+		case WALL: return 0x000000
+		case DANCEFLOOR: return 0x441133
+		case DRINKBAR: return 0x113355
+		case FOODBAR: return 0x114422
+		default: return 0x000000	
 	}
-	return 0x333333 // case 0:
 }
 

@@ -37,8 +37,21 @@ export default class Component {
 		this.system.removedFromWorld(world)
 	}
 	
-	addedToEntity() {}
-	removedFromEntity() {}
+	/**
+	 * Override this to get notified when a component is added to entity.
+	 * 
+	 * @param {Entity} entity on which this component is added
+	 * @memberof Component
+	 */
+	addedToEntity(/*entity*/) { }
+	
+	/**
+	 * Override this to get notified when a component is being removed from entity.
+	 * 
+	 * @param {Entity} entity from which this component gets removed
+	 * @memberof Component
+	 */
+	removedFromEntity(/*entity*/) {}
 	
 	get entity() {
 		return this._entity

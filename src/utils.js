@@ -6,7 +6,8 @@ export const mergeSort = function(array, comparefn) {
 		let i = lo
 		let j = mid + 1
 		let k = lo
-		while(true){
+		let _b = true
+		while(_b){
 			let cmp = comparefn(arr[i], arr[j])
 			if(cmp <= 0){
 				aux[k++] = arr[i++]
@@ -14,7 +15,7 @@ export const mergeSort = function(array, comparefn) {
 					do
 						aux[k++] = arr[j++]
 					while(j <= hi)
-					break
+					_b = false
 				}
 			} else {
 				aux[k++] = arr[j++]
@@ -22,7 +23,7 @@ export const mergeSort = function(array, comparefn) {
 					do
 						aux[k++] = arr[i++]
 					while(i <= mid)
-					break
+					_b = false
 				}
 			}
 		}

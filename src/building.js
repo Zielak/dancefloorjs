@@ -1,11 +1,11 @@
 import Game from './game'
 import pathfinding from './pathfinding'
 
-const FLOOR = 0
-const WALL = 1
-const DANCEFLOOR = 2
-const DRINKBAR = 3
-const FOODBAR = 4
+export const FLOOR = 0
+export const WALL = 1
+export const DANCEFLOOR = 2
+export const DRINKBAR = 3
+export const FOODBAR = 4
 
 const walkableTiles = [FLOOR,DANCEFLOOR,DRINKBAR,FOODBAR]
 

@@ -13,5 +13,5 @@ test('constructor', t => {
 	t.is(timer.time, 0)
 	t.is(timer.running, true)
 	t.is(timer.finished, false)
-	Timer
+	// Timer
 })
