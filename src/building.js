@@ -1,4 +1,5 @@
-import Game from './game'
+import {gameWidth, gameHeight} from './game'
+import Vector from './vector'
 import pathfinding from './pathfinding'
 
 export const FLOOR = 0
@@ -13,13 +14,13 @@ let tilemap = []
 
 function prepareMap(stage){
 	tilemap = createTileMap(
-		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE),
-		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)
+		parseInt(gameWidth / pathfinding.GRID_CELL_SIZE),
+		parseInt(gameHeight / pathfinding.GRID_CELL_SIZE)
 	)
 
 	pathfinding.setGrid(tilemap)
 	pathfinding.setAcceptableTiles(walkableTiles)
-	stage.addChild(pathfinding.getDebugGrid())
+	stage && stage.addChild(pathfinding.getDebugGrid())
 }
 
 function createTileMap(gridCols, gridRows) {
@@ -34,7 +35,41 @@ function createTileMap(gridCols, gridRows) {
 }
 
 /**
+ * Gives you position of the closest cell of given type
+ * 
+ * @param {number} x 
+ * @param {number} y 
+ * @param {number} type FLOOR, WALL etc
+ * @returns {Vector}
+ */
+function getClosestPoint(x, y, type = FLOOR) {
+	const point = new Vector(x, y)
+	const points = getAllPoints(type)
+	
+	return points
+}
+
+/**
+ * Get all points of given type from the tilemap
+ * 
+ * @param {number} type 
+ * @returns 
+ */
+function getAllPoints(type) {
+	let points = tilemap.reduce((prev, arr, x) => {
+		return arr.reduce((prev, el, y) => {
+			if (el === type) {
+				prev.push({x, y})
+				return prev
+			}
+		}, [])
+	}, [])
+	return points
+}
+
+/**
  * Used in generating building. Gives you one cell.
+ * TODO: seperate procedural generation
  * 
  * @param {number} x 
  * @param {number} y 
@@ -86,4 +121,10 @@ function getTilemapCell(x, y, width, height) {
 
 export default {
 	prepareMap,
+	
+	_: {
+		createTileMap,
+		getClosestPoint,
+		getTilemapCell,
+	}
 }

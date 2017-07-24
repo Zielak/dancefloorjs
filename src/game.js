@@ -1,6 +1,6 @@
 // External dependencies
 import CES from 'ces'
-import * as PIXI from 'pixi.js'
+import {Container, autoDetectRenderer} from 'pixi.js'
 import Chance from 'chance'
 
 const rnd = new Chance()
@@ -20,16 +20,16 @@ import Human from './human/human'
 const gameWidth = document.body.offsetWidth
 const gameHeight = document.body.offsetHeight
 
-const renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight)
+const renderer = autoDetectRenderer(gameWidth, gameHeight)
 document.body.appendChild(renderer.view)
 
 const world = new CES.World()
-const stage = new PIXI.Container()
+const stage = new Container()
 
 /**
  * Container for all UI stuff
  */
-const ui = new PIXI.Container()
+const ui = new Container()
 stage.addChild(ui)
 
 const state = {
