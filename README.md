@@ -1,6 +1,12 @@
 # dancefloor sim js
 
-trying to re-create my [dancefloor simulator in ES6](https://github.com/Zielak/dancefloor/)
+trying to re-create my dancefloor simulator [from Haxe](https://github.com/Zielak/dancefloor/) to ES6
+
+## demo
+
+most likely NOT up to date:
+
+[Open DEMO](https://darekgreenly.com/pub/dancefloorjs/)
 
 ## run it
 
