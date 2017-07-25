@@ -60,7 +60,7 @@ function getClosestPoint(x, y, type = FLOOR) {
  * @param {number} type 
  * @returns 
  */
-function getAllPoints(type) {
+function getAllPoints(type = 0) {
 	return tilemap.reduce((foundTiles, row, y) => {
 		return [
 			...foundTiles,
@@ -72,18 +72,6 @@ function getAllPoints(type) {
 			}, [])
 		]
 	}, [])
-}
-
-/**
- * Offset all given vectors by another vector.
- * Useful for mocking different "origin" point in the world.
- * 
- * @param {array} vectors array of Vectors
- * @param {Vector} offset 
- * @returns 
- */
-function offsetVectors(vectors, offset){
-	return vectors.map(el => Vector.Add(el, offset))
 }
 
 /**
@@ -151,5 +139,6 @@ export default {
 		createTileMap,
 		getClosestPoint,
 		getTilemapCell,
+		getAllPoints,
 	}
 }

@@ -53,19 +53,17 @@ function start() {
 			resume()
 		}
 	})
-	const spawnGuy = () => new Human({
-		pos: new Vector(
-			rnd.float(80, gameWidth - 80),
-			rnd.float(80, gameHeight - 80)
-		)
+	const spawnGuy = point => new Human({
+		pos: new Vector(point.x, point.y)
 	})
 	
 	const spawnPeople = () => {
-		for (let i = 0; i < 1; i++) {
+		for (let i = 0; i < 10; i++) {
+			const randomPlace = utils.gridPos2WorldPos(rnd.pickone(building._.getAllPoints()))
 			if (i === 0) {
-				stage.emit('updateHumanDebugger', spawnGuy())
+				stage.emit('updateHumanDebugger', spawnGuy(randomPlace))
 			} else {
-				spawnGuy()
+				spawnGuy(randomPlace)
 			}
 		}
 	}
