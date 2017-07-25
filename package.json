@@ -16,7 +16,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "babel-plugin-provide-modules": "^1.0.3",
-    "behavior3js": "git+ssh://git@github.com/Zielak/behavior3js.git",
+    "behavior3js": "git+ssh://git@github.com:behavior3/behavior3js.git",
     "ces": "0.0.4",
     "chance": "^1.0.10",
     "d3-color": "^1.0.3",
@@ -54,14 +54,7 @@
       "@ava/stage-4",
       "@ava/transform-test-files"
     ],
-    "sourceMaps": "inline",
-    "plugins": [
-      [
-        "provide-modules", {
-          "../test/_dom": ["window", "document"]
-        }
-      ]
-    ]
+    "sourceMaps": "inline"
   },
   "nyc": {
     "include": [

@@ -15,9 +15,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				// TODO: depending on environment disable 'exclude' and 'use' (test/dev)
 				test: /\.js$/,
-				// exclude: /(node_modules)/,
-				use: ['babel-loader'],
+				exclude: /(node_modules)/,
+				// use: ['babel-loader'],
 			},
 			{
 				test: /\.css$/,
@@ -42,3 +43,11 @@ module.exports = {
 		port: 8080
 	}
 }
+
+// "plugins": [
+//   [
+//     "nope-provide-modules", {
+//       "../test/_dom": ["window", "document"]
+//     }
+//   ]
+// ]

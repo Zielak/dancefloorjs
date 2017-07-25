@@ -3,7 +3,7 @@ import pathfinding from '../../pathfinding'
 class WalkTo extends b3.Action {
 
 	constructor (settings) {
-		super(settings)
+		super({settings, name: 'WalkTo'})
 		
 		if(typeof settings.milliseconds === 'object'){
 			this.milliseconds = {
@@ -41,8 +41,5 @@ class WalkTo extends b3.Action {
 		return b3.RUNNING
 	}
 }
-
-WalkTo.prototype.name = 'WalkTo'
-
 
 export default WalkTo

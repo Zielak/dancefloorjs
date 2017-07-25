@@ -1,12 +1,13 @@
-import {gameWidth, gameHeight} from './game'
+import Game from './game'
 import Vector from './vector'
 import pathfinding from './pathfinding'
+import * as utils from './utils'
 
-export const FLOOR = 0
-export const WALL = 1
-export const DANCEFLOOR = 2
-export const DRINKBAR = 3
-export const FOODBAR = 4
+const FLOOR = 0
+const WALL = 1
+const DANCEFLOOR = 2
+const DRINKBAR = 3
+const FOODBAR = 4
 
 const walkableTiles = [FLOOR,DANCEFLOOR,DRINKBAR,FOODBAR]
 
@@ -14,8 +15,8 @@ let tilemap = []
 
 function prepareMap(stage){
 	tilemap = createTileMap(
-		parseInt(gameWidth / pathfinding.GRID_CELL_SIZE),
-		parseInt(gameHeight / pathfinding.GRID_CELL_SIZE)
+		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE),
+		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)
 	)
 
 	pathfinding.setGrid(tilemap)
@@ -43,10 +44,14 @@ function createTileMap(gridCols, gridRows) {
  * @returns {Vector}
  */
 function getClosestPoint(x, y, type = FLOOR) {
-	const point = new Vector(x, y)
 	const points = getAllPoints(type)
-	
-	return points
+	const start = new Vector(x, y)
+
+	const sorted = utils.mergeSort(points, (a, b) => {
+		return ((Vector.Subtract(start, a).length) - (Vector.Subtract(start, b).length))
+	})
+
+	return sorted[0]
 }
 
 /**
@@ -56,15 +61,29 @@ function getClosestPoint(x, y, type = FLOOR) {
  * @returns 
  */
 function getAllPoints(type) {
-	let points = tilemap.reduce((prev, arr, x) => {
-		return arr.reduce((prev, el, y) => {
-			if (el === type) {
-				prev.push({x, y})
-				return prev
-			}
-		}, [])
+	return tilemap.reduce((foundTiles, row, y) => {
+		return [
+			...foundTiles,
+			...row.reduce((tiles, el, x) => {
+				if (el === type) {
+					tiles.push({x, y})
+				}
+				return tiles
+			}, [])
+		]
 	}, [])
-	return points
+}
+
+/**
+ * Offset all given vectors by another vector.
+ * Useful for mocking different "origin" point in the world.
+ * 
+ * @param {array} vectors array of Vectors
+ * @param {Vector} offset 
+ * @returns 
+ */
+function offsetVectors(vectors, offset){
+	return vectors.map(el => Vector.Add(el, offset))
 }
 
 /**
@@ -120,6 +139,12 @@ function getTilemapCell(x, y, width, height) {
 }
 
 export default {
+	FLOOR,
+	WALL,
+	DANCEFLOOR,
+	DRINKBAR,
+	FOODBAR,
+
 	prepareMap,
 	
 	_: {

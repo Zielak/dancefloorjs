@@ -4,7 +4,7 @@ import Game from '../../game'
 class Wait extends b3.Action {
 	
 	constructor (settings) {
-		super(settings)
+		super({settings, name: 'WaitRandom'})
 		
 		if(typeof settings.milliseconds === 'object'){
 			this.milliseconds = {
@@ -38,7 +38,5 @@ class Wait extends b3.Action {
 	}
 
 }
-
-Wait.prototype.name = 'WaitRandom'
 
 export default Wait

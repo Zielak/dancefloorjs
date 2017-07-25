@@ -74,7 +74,7 @@ export default class Mover extends Component {
 		// COPY the path. We'll be modyfying it
 		this.path = path.slice(0)
 		this.path.target = 0
-		this.path.finished = false
+		this.path.finished = path.length > 0 ? false : true
 	}
 	clearPath(){
 		this.path = []
@@ -84,7 +84,7 @@ export default class Mover extends Component {
 		return this.path.length > 0 && this.path.finished === false
 	}
 	get reachedPathDestination() {
-		return this.path.length > 0 && this.path.finished === true
+		return this.path.finished === true
 	}
 
 	get speed() {

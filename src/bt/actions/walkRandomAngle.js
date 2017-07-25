@@ -4,7 +4,15 @@ import Game from '../../game'
 class WalkRandomAngle extends b3.Action {
 
 	constructor (settings) {
-		super(settings)
+		super({
+			settings,
+			name: 'WalkRandomAngle',
+			properties: {
+				milliseconds: 3000,
+				addRandom: 0,
+				entity: undefined,
+			}
+		})
 		
 		if(typeof settings.milliseconds === 'object'){
 			this.milliseconds = {
@@ -41,13 +49,6 @@ class WalkRandomAngle extends b3.Action {
 		}
 		return b3.RUNNING
 	}
-}
-
-WalkRandomAngle.prototype.name = 'WalkRandomAngle'
-WalkRandomAngle.prototype.parameters = {
-	milliseconds: 3000,
-	addRandom: 0,
-	entity: undefined,
 }
 
 export default WalkRandomAngle

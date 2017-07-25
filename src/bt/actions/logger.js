@@ -3,7 +3,7 @@ import Bubble from '../../components/bubble'
 
 class Logger extends b3.Action {
 	constructor(settings) {
-		super(settings)
+		super({settings, name: 'Logger'})
 		
 		this.message = settings.message || '-silence-'
 		this.textStyle = Object.assign({}, {fill: 0x000000}, settings.textStyle || {})
@@ -12,7 +12,7 @@ class Logger extends b3.Action {
 	}
 
 	open(tick) {
-		// console.log('opened logger')
+		console.log('opened logger')
 		this.entity.addComponent(new Bubble({
 			message: this.message,
 			textStyle: this.textStyle,
@@ -28,7 +28,5 @@ class Logger extends b3.Action {
 		return b3.SUCCESS
 	}
 }
-
-Logger.prototype.name = 'Logger'
 
 export default Logger

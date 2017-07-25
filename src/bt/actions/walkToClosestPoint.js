@@ -2,18 +2,18 @@ import pathfinding from '../../pathfinding'
 import * as utils from '../../utils'
 import Game from '../../game'
 
-class WalkToRandomPoint extends b3.Action {
+class WalkToClosestPoint extends b3.Action {
 
-	constructor ({name = 'WalkToRandomPoint', entity}) {
+	constructor ({name = 'WalkToClosestPoint', entity, targetType}) {
 		super({name})
 		
+		this.targetType = targetType
 		this.entity = entity
 	}
 	open (tick) {
-		const finder = pathfinding.findPath({
+		const finder = pathfinding.findPathToClosestType({
 			start: utils.worldPos2GridPos(this.entity.x, this.entity.y),
-			targetX: Game.rnd.int(0, pathfinding.gridWidth-1),
-			targetY: Game.rnd.int(0, pathfinding.gridHeight-1),
+			type: this.targetType,
 			callback: foundPath => tick.blackboard.set('path', foundPath, tick.tree.id, this.id)
 		})
 		const mover = this.entity.getComponent('mover')
@@ -53,4 +53,4 @@ class WalkToRandomPoint extends b3.Action {
 	}
 }
 
-export default WalkToRandomPoint
+export default WalkToClosestPoint

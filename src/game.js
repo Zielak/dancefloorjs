@@ -61,7 +61,7 @@ function start() {
 	})
 	
 	const spawnPeople = () => {
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 1; i++) {
 			if (i === 0) {
 				stage.emit('updateHumanDebugger', spawnGuy())
 			} else {
