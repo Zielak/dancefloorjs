@@ -4,7 +4,7 @@ import * as utils from '../utils'
 import Game from '../game'
 
 export default class Mover extends Component {
-	constructor({ pos, acceleration, force, velocity } = {}) {
+	constructor({ pos, acceleration, force, velocity, bounds } = {}) {
 		super('mover')
 
 		// Direction-aware velocity
@@ -25,7 +25,7 @@ export default class Mover extends Component {
 		// Used in pathfinding, will go to each point one by one
 		this.path = []
 
-		this.bounds = {
+		this.bounds = bounds || {
 			x: 10, y: 10,
 			w: Game.gameWidth - 20,
 			h: Game.gameHeight - 20

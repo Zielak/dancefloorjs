@@ -17,13 +17,13 @@ export default class AIController extends Component {
 
 		this.tree = new b3.BehaviorTree()
 
-		const humanNeeds = [
+		const humanNeedsTree = [
 			// HUNGER
 			new Condition({
 				name: 'Hunger',
 				checkCondition: () => {
 					const hunger = this.entity.getComponent('hunger')
-					return hunger.value >= 0.2 // Game.rnd.float(0.7, 0.85)
+					return hunger.value >= Game.rnd.float(0.7, 0.85)
 				},
 				child: new b3.MemSequence({
 					children: [
@@ -47,7 +47,7 @@ export default class AIController extends Component {
 				name: 'Thirst',
 				checkCondition: () => {
 					const thirst = this.entity.getComponent('thirst')
-					return thirst.value >= 0.2 // Game.rnd.float(0.7, 0.85)
+					return thirst.value >= Game.rnd.float(0.7, 0.85)
 				},
 				child: new b3.MemSequence({
 					children: [
@@ -67,7 +67,7 @@ export default class AIController extends Component {
 
 			}),
 			// INTOXICATION
-			new Condition({
+			/*new Condition({
 				name: 'Intoxication',
 				checkCondition: () => {
 					const intoxication = this.entity.getComponent('intoxication')
@@ -91,35 +91,42 @@ export default class AIController extends Component {
 					]
 				})
 
+			}),*/
+		]
+		
+		const idleTree = [
+			// new Wait({
+			// 	milliseconds: {min:500, max:2000},
+			// 	addRandom: 2000
+			// }),
+			new WalkToRandomPoint({
+				name: 'Walk Random',
+				entity: this.entity
+			}),
+			new WalkRandomAngle({
+				entity: this.entity,
+				milliseconds: {min:300, max:500},
+				addRandom: 500
 			}),
 		]
 
 		this.tree.root = new b3.MemSequence({
 			children: [
-				// new WalkRandomAngle({
-				// 	entity: this.entity,
-				// 	milliseconds: {min:300, max:500},
-				// 	addRandom: 1000
-				// }),
 				new Wait({
 					milliseconds: {min:500, max:2000},
 				}),
 				new RandomChild({
-					children: humanNeeds
+					name: 'Check Human Needs',
+					children: humanNeedsTree
 				}),
-				new Wait({
-					milliseconds: {min:500, max:2000},
-					addRandom: 2000
+				new RandomChild({
+					name: 'Act Idle',
+					children: idleTree
 				}),
-				new WalkToRandomPoint({
-					entity: this.entity
-				})
 			]
 		})
 
 		this.blackboard = new b3.Blackboard()
-
-		this.hungryTree = new b3.BehaviorTree()
 	}
 
 	update(dt, entity) {

@@ -5,6 +5,7 @@ import Game from '../game'
 import {rgb2hex} from '../utils'
 import Entity from '../entity'
 import Vector from '../vector'
+import building from '../building'
 
 import Thirst from './thirst'
 import Hunger from './hunger'
@@ -35,7 +36,10 @@ export default class Human extends Entity {
 		this.geometry = Human.prepareGeometry(this)
 		Game.stage.addChild(this.geometry)
 
-		this.addComponent(new Mover({pos}))
+		this.addComponent(new Mover({
+			pos,
+			bounds: building.bounds
+		}))
 		this.addComponent(new Thirst())
 		this.addComponent(new Hunger())
 		this.addComponent(new Intoxication())

@@ -9,19 +9,32 @@ const DANCEFLOOR = 2
 const DRINKBAR = 3
 const FOODBAR = 4
 
+const bounds = {
+	x: 0,
+	y: 0,
+	w: Game.gameWidth,
+	h: Game.gameHeight,
+}
+
 const walkableTiles = [FLOOR,DANCEFLOOR,DRINKBAR,FOODBAR]
 
 let tilemap = []
 
 function prepareMap(stage){
 	tilemap = createTileMap(
-		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE),
-		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)
+		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE)+2,
+		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)+2
 	)
 
 	pathfinding.setGrid(tilemap)
 	pathfinding.setAcceptableTiles(walkableTiles)
 	stage && stage.addChild(pathfinding.getDebugGrid())
+	
+	// update bounds
+	bounds.x = pathfinding.GRID_CELL_SIZE * 0.1
+	bounds.y = pathfinding.GRID_CELL_SIZE * 0.1
+	bounds.w = (pathfinding.gridWidth-2.1) * pathfinding.GRID_CELL_SIZE
+	bounds.h = (pathfinding.gridHeight-2.1) * pathfinding.GRID_CELL_SIZE
 }
 
 function createTileMap(gridCols, gridRows) {
@@ -94,22 +107,24 @@ function getTilemapCell(x, y, width, height) {
 	let fin = FLOOR
 	
 	if (
-		x > 0.3 && x < 0.7 &&
-		y > 0.3 && y < 0.7
+		x > 0.25 && x < 0.7 &&
+		y > 0.25 && y < 0.7
 	) {
 		fin = DANCEFLOOR
 	}
+	
+	let movedPI = Math.PI + Math.PI*0.15
 
 	// Drink bar
 	if (
-		Math.cos( y*Math.PI + x*Math.PI ) > 0.6
+		Math.cos( y*movedPI + x*movedPI ) > 0.6
 	) {
 		fin = DRINKBAR
 	}
 
 	// Food bar
 	if (
-		Math.cos( (y+0.5)*Math.PI - (x+0.5)*Math.PI ) < -0.6
+		Math.cos( (y+0.5)*movedPI - (x+0.5)*movedPI ) < -0.6
 	) {
 		fin = FOODBAR
 	}
@@ -120,7 +135,7 @@ function getTilemapCell(x, y, width, height) {
 	}
 
 	// Bounds walls
-	if (y<row || x<col || y>1-3*row || x>1-3*col){
+	if (y>1-row*3 || x>1-col*3){
 		fin = WALL
 	}
 	return fin
@@ -132,6 +147,7 @@ export default {
 	DANCEFLOOR,
 	DRINKBAR,
 	FOODBAR,
+	bounds,
 
 	prepareMap,
 	

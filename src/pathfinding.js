@@ -6,7 +6,7 @@ import buliding from './building'
 const easystar = new EasyStar.js()
 
 const pathfinding = {
-	GRID_CELL_SIZE: 20,
+	GRID_CELL_SIZE: 32,
 	gridWidth: undefined,
 	gridHeight: undefined,
 
@@ -50,7 +50,7 @@ debugGrid.addChild(gridGraphics)
 function redrawDebugGrid(grid){
 	const width = grid[0].length - 1
 	const height = grid.length - 1
-	const OUTLINE = 0x181818
+	const OUTLINE = 0x333333
 	let value
 	gridGraphics.clear()
 	for (let y = 0; y < height; y++) {

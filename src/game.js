@@ -45,8 +45,6 @@ const state = {
  * 
  */
 function start() {
-	document.removeEventListener('click', start)
-
 	// Start the loop again when browser tab becomes active
 	document.addEventListener('visibilitychange', () => {
 		if (document.visibilityState === 'visible') {
@@ -54,7 +52,8 @@ function start() {
 		}
 	})
 	const spawnGuy = point => new Human({
-		pos: new Vector(point.x, point.y)
+		pos: new Vector(point.x, point.y),
+		bounds: building.bounds
 	})
 	
 	const spawnPeople = () => {
