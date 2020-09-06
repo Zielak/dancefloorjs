@@ -1,10 +1,11 @@
 import Component from "../component"
-import Game from "../game"
+import rnd from "../utils/rnd"
+import { limit } from "../utils/math"
 
 export default class Hunger extends Component {
 	constructor(initValue) {
 		super("hunger")
-		this._value = initValue || Game.rnd.float(0, 0.1)
+		this._value = initValue || rnd.floating({ min: 0, max: 0.1 })
 
 		this.change = 0.006
 	}
@@ -13,7 +14,7 @@ export default class Hunger extends Component {
 		return this._value
 	}
 	set value(v) {
-		this._value = Math.limit(v)
+		this._value = limit(v)
 	}
 
 	update(dt) {

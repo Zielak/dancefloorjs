@@ -1,4 +1,5 @@
-import pathfinding from "../../pathfinding"
+import Timer from "../../timer"
+import rnd from "../../utils/rnd"
 
 class WalkTo extends b3.Action {
 	constructor(settings) {
@@ -19,14 +20,14 @@ class WalkTo extends b3.Action {
 		this.entity = settings.entity || undefined
 	}
 	open(tick) {
+		const { min, max } = this.milliseconds
 		this.timer = new Timer(
-			rnd.float(this.milliseconds.min, this.milliseconds.max) +
-				rnd.float(0, this.addRandom)
+			rnd.floating({ min, max }) + rnd.floating({ min: 0, max: this.addRandom })
 		)
 		// console.log('opened walkRandom: ',this.timer.time)
 
 		const mover = this.entity.getComponent("mover")
-		mover.velocity.set_xy(0, 100).setAngle(rnd.float(0, 360))
+		mover.velocity.set_xy(0, 100).setAngle(rnd.floating({ min: 0, max: 360 }))
 		tick.blackboard.set("mover", mover, tick.tree.id, this.id)
 	}
 	close(tick) {

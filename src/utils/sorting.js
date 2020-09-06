@@ -1,7 +1,4 @@
-import Vector from "./vector"
-import pathfinding from "./pathfinding"
-
-export const mergeSort = function (array, comparefn) {
+export function mergeSort(array, comparefn) {
 	function merge(arr, aux, lo, mid, hi, comparefn) {
 		let i = lo
 		let j = mid + 1
@@ -54,35 +51,6 @@ export const mergeSort = function (array, comparefn) {
 	}
 
 	return merge_sort(array, comparefn)
-}
-
-export function rgb2hex(v) {
-	var rgb = v.b | (v.g << 8) | (v.r << 16)
-	return rgb //'#' + (0x1000000 + rgb).toString(16).slice(1)
-}
-
-export function worldPos2GridPos(x, y) {
-	let vec = new Vector()
-	if (x instanceof Object) {
-		vec.set_xy(x.x, x.y)
-	} else {
-		vec.set_xy(x, y)
-	}
-	return vec
-		.divideScalar(pathfinding.GRID_CELL_SIZE)
-		.subtractScalar(0.5)
-		.round()
-}
-export function gridPos2WorldPos(x, y) {
-	let vec = new Vector()
-	if (x instanceof Object) {
-		vec.set_xy(x.x, x.y)
-	} else {
-		vec.set_xy(x, y)
-	}
-	return vec
-		.multiplyScalar(pathfinding.GRID_CELL_SIZE)
-		.addScalar(pathfinding.GRID_CELL_SIZE / 2)
 }
 
 /**

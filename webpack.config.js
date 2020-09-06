@@ -18,7 +18,7 @@ module.exports = {
 				// TODO: depending on environment disable 'exclude' and 'use' (test/dev)
 				test: /\.js$/,
 				exclude: /(node_modules)/,
-				// use: ['babel-loader'],
+				use: ["babel-loader"],
 			},
 			{
 				test: /\.css$/,

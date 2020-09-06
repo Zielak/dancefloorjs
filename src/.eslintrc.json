@@ -5,5 +5,7 @@
 	},
 	"globals": {
 		"b3": true
-	}
+	},
+	"parser": "babel-eslint",
+	"plugins": ["@babel"]
 }

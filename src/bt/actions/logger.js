@@ -1,4 +1,4 @@
-import * as PIXI from "pixi.js"
+import { Rectangle } from "pixi.js"
 import Bubble from "../../components/bubble"
 
 class Logger extends b3.Action {
@@ -16,12 +16,11 @@ class Logger extends b3.Action {
 	}
 
 	open(tick) {
-		console.log("opened logger")
 		this.entity.addComponent(
 			new Bubble({
 				message: this.message,
 				textStyle: this.textStyle,
-				rectangle: new PIXI.Rectangle(-50, 0, 100, 18),
+				rectangle: new Rectangle(-50, 0, 100, 18),
 				background: this.background,
 			})
 		)

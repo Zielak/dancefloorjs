@@ -12,6 +12,7 @@ import {
 } from "../bt/actions"
 import RandomChild from "../bt/composites/random-child"
 import Condition from "../bt/decorators/condition"
+import rnd from "../utils/rnd"
 
 export default class AIController extends Component {
 	constructor() {
@@ -27,7 +28,7 @@ export default class AIController extends Component {
 				name: "Hunger",
 				checkCondition: () => {
 					const hunger = this.entity.getComponent("hunger")
-					return hunger.value >= Game.rnd.float(0.7, 0.85)
+					return hunger.value >= rnd.floating({ min: 0.7, max: 0.85 })
 				},
 				child: new b3.MemSequence({
 					children: [
@@ -50,7 +51,7 @@ export default class AIController extends Component {
 				name: "Thirst",
 				checkCondition: () => {
 					const thirst = this.entity.getComponent("thirst")
-					return thirst.value >= Game.rnd.float(0.7, 0.85)
+					return thirst.value >= rnd.floating({ min: 0.7, max: 0.85 })
 				},
 				child: new b3.MemSequence({
 					children: [
@@ -74,7 +75,7 @@ export default class AIController extends Component {
 				checkCondition: () => {
 					const intoxication = this.entity.getComponent('intoxication')
 					// TODO: check persona, if a guy WANTS to drink/get high
-					return intoxication.value <= Game.rnd.float(0, 0.3)
+					return intoxication.value <= rnd.floating({min:0, max:0.3})
 				},
 				child: new b3.MemSequence({
 					children: [

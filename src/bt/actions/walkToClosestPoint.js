@@ -1,6 +1,5 @@
-import pathfinding from "../../pathfinding"
-import * as utils from "../../utils"
-import Game from "../../game"
+import pathFinding from "../../pathFinding"
+import { worldPos2GridPos } from "../../utils/location"
 
 class WalkToClosestPoint extends b3.Action {
 	constructor({ name = "WalkToClosestPoint", entity, targetType }) {
@@ -10,8 +9,8 @@ class WalkToClosestPoint extends b3.Action {
 		this.entity = entity
 	}
 	open(tick) {
-		const finder = pathfinding.findPathToClosestType({
-			start: utils.worldPos2GridPos(this.entity.x, this.entity.y),
+		const finder = pathFinding.findPathToClosestType({
+			start: worldPos2GridPos(this.entity.x, this.entity.y),
 			type: this.targetType,
 			callback: (foundPath) =>
 				tick.blackboard.set("path", foundPath, tick.tree.id, this.id),

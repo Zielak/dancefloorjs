@@ -1,40 +1,40 @@
-import Game from "./game"
+import { GAME_WIDTH, GAME_HEIGHT } from "./game"
 import Vector from "./vector"
-import pathfinding from "./pathfinding"
-import * as utils from "./utils"
+import pathFinding from "./pathFinding"
+import { mergeSort } from "./utils/sorting"
 
 const FLOOR = 0
 const WALL = 1
-const DANCEFLOOR = 2
-const DRINKBAR = 3
-const FOODBAR = 4
+const DANCE_FLOOR = 2
+const DRINK_BAR = 3
+const FOOD_BAR = 4
 
 const bounds = {
 	x: 0,
 	y: 0,
-	w: Game.gameWidth,
-	h: Game.gameHeight,
+	w: GAME_WIDTH,
+	h: GAME_HEIGHT,
 }
 
-const walkableTiles = [FLOOR, DANCEFLOOR, DRINKBAR, FOODBAR]
+const walkableTiles = [FLOOR, DANCE_FLOOR, DRINK_BAR, FOOD_BAR]
 
 let tilemap = []
 
 function prepareMap(stage) {
 	tilemap = createTileMap(
-		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE) + 2,
-		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE) + 2
+		parseInt(GAME_WIDTH / pathFinding.GRID_CELL_SIZE) + 2,
+		parseInt(GAME_HEIGHT / pathFinding.GRID_CELL_SIZE) + 2
 	)
 
-	pathfinding.setGrid(tilemap)
-	pathfinding.setAcceptableTiles(walkableTiles)
-	stage && stage.addChild(pathfinding.getDebugGrid())
+	pathFinding.setGrid(tilemap)
+	pathFinding.setAcceptableTiles(walkableTiles)
+	stage?.addChild(pathFinding.getDebugGrid())
 
 	// update bounds
-	bounds.x = pathfinding.GRID_CELL_SIZE * 0.1
-	bounds.y = pathfinding.GRID_CELL_SIZE * 0.1
-	bounds.w = (pathfinding.gridWidth - 2.1) * pathfinding.GRID_CELL_SIZE
-	bounds.h = (pathfinding.gridHeight - 2.1) * pathfinding.GRID_CELL_SIZE
+	bounds.x = pathFinding.GRID_CELL_SIZE * 0.1
+	bounds.y = pathFinding.GRID_CELL_SIZE * 0.1
+	bounds.w = (pathFinding.gridWidth - 2.1) * pathFinding.GRID_CELL_SIZE
+	bounds.h = (pathFinding.gridHeight - 2.1) * pathFinding.GRID_CELL_SIZE
 }
 
 function createTileMap(gridCols, gridRows) {
@@ -42,7 +42,7 @@ function createTileMap(gridCols, gridRows) {
 	for (let y = 0; y < gridRows; y++) {
 		map[y] = []
 		for (let x = 0; x < gridCols; x++) {
-			map[y][x] = getTilemapCell(x, y, gridCols, gridRows)
+			map[y][x] = getTileMapCell(x, y, gridCols, gridRows)
 		}
 	}
 	return map
@@ -60,7 +60,7 @@ function getClosestPoint(x, y, type = FLOOR) {
 	const points = getAllPoints(type)
 	const start = new Vector(x, y)
 
-	const sorted = utils.mergeSort(points, (a, b) => {
+	const sorted = mergeSort(points, (a, b) => {
 		return Vector.Subtract(start, a).length - Vector.Subtract(start, b).length
 	})
 
@@ -97,7 +97,7 @@ function getAllPoints(type = 0) {
  * @param {number} height
  * @returns {number} cell type
  */
-function getTilemapCell(x, y, width, height) {
+function getTileMapCell(x, y, width, height) {
 	x = x / width
 	y = y / height
 
@@ -107,19 +107,19 @@ function getTilemapCell(x, y, width, height) {
 	let fin = FLOOR
 
 	if (x > 0.25 && x < 0.7 && y > 0.25 && y < 0.7) {
-		fin = DANCEFLOOR
+		fin = DANCE_FLOOR
 	}
 
 	let movedPI = Math.PI + Math.PI * 0.15
 
 	// Drink bar
 	if (Math.cos(y * movedPI + x * movedPI) > 0.6) {
-		fin = DRINKBAR
+		fin = DRINK_BAR
 	}
 
 	// Food bar
 	if (Math.cos((y + 0.5) * movedPI - (x + 0.5) * movedPI) < -0.6) {
-		fin = FOODBAR
+		fin = FOOD_BAR
 	}
 
 	// Random walls, only on empty space
@@ -137,9 +137,9 @@ function getTilemapCell(x, y, width, height) {
 export default {
 	FLOOR,
 	WALL,
-	DANCEFLOOR,
-	DRINKBAR,
-	FOODBAR,
+	DANCE_FLOOR,
+	DRINK_BAR,
+	FOOD_BAR,
 	bounds,
 
 	prepareMap,
@@ -147,7 +147,7 @@ export default {
 	_: {
 		createTileMap,
 		getClosestPoint,
-		getTilemapCell,
+		getTileMapCell,
 		getAllPoints,
 	},
 }

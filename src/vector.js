@@ -1,3 +1,5 @@
+import { lerp } from "./utils/math"
+
 export default class Vector {
 	constructor(x, y) {
 		this.x = x || 0
@@ -11,7 +13,6 @@ export default class Vector {
 	}
 	set length(value) {
 		this.normalize().multiplyScalar(value)
-		return value
 	}
 
 	set_xy(x, y) {
@@ -30,10 +31,7 @@ export default class Vector {
 	 * @memberof Vector
 	 */
 	lerp_xy(_dest_x, _dest_y, _t) {
-		return this.set_xy(
-			Math.lerp(this.x, _dest_x, _t),
-			Math.lerp(this.y, _dest_y, _t)
-		)
+		return this.set_xy(lerp(this.x, _dest_x, _t), lerp(this.y, _dest_y, _t))
 	}
 
 	/**
@@ -45,10 +43,7 @@ export default class Vector {
 	 * @memberof Vector
 	 */
 	lerp(_other, _t) {
-		return this.set_xy(
-			Math.lerp(this.x, _other.x, _t),
-			Math.lerp(this.y, _other.y, _t)
-		)
+		return this.set_xy(lerp(this.x, _other.x, _t), lerp(this.y, _other.y, _t))
 	}
 
 	/**

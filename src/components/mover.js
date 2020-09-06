@@ -1,7 +1,7 @@
 import Component from "../component"
 import Vector from "../vector"
-import * as utils from "../utils"
-import Game from "../game"
+import { GAME_WIDTH, GAME_HEIGHT } from "../game"
+import { gridPos2WorldPos } from "../utils/location"
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity, bounds } = {}) {
@@ -22,14 +22,14 @@ export default class Mover extends Component {
 		// Real position of entity, right before it's rounded for view
 		this.realPos = new Vector((pos && pos.x) || 0, (pos && pos.y) || 0)
 
-		// Used in pathfinding, will go to each point one by one
+		// Used in pathFinding, will go to each point one by one
 		this.path = []
 
 		this.bounds = bounds || {
 			x: 10,
 			y: 10,
-			w: Game.gameWidth - 20,
-			h: Game.gameHeight - 20,
+			w: GAME_WIDTH - 20,
+			h: GAME_HEIGHT - 20,
 		}
 	}
 
@@ -93,7 +93,6 @@ export default class Mover extends Component {
 	}
 	set speed(v) {
 		this.velocity.set_length2D(v)
-		return this.velocity.get_length2D()
 	}
 }
 
@@ -108,7 +107,7 @@ function updatePathMovement(path, position, velocity) {
 	// check if we're in position yet
 	const current = position.clone()
 
-	let target = utils.gridPos2WorldPos(path[path.target] || current)
+	let target = gridPos2WorldPos(path[path.target] || current)
 
 	if (
 		current.x >= target.x - 5 &&
@@ -120,7 +119,7 @@ function updatePathMovement(path, position, velocity) {
 			path.finished = true
 			return
 		} else {
-			target = utils.gridPos2WorldPos(path[path.target])
+			target = gridPos2WorldPos(path[path.target])
 			// console.log('went though',target,`${path.length - path.target} points to go`)
 		}
 	}

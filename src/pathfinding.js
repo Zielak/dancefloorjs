@@ -1,19 +1,19 @@
 import EasyStar from "easystarjs"
 import Vector from "./vector"
 import { Container, Graphics } from "pixi.js"
-import buliding from "./building"
+import building from "./building"
 
 const easystar = new EasyStar.js()
 
-const pathfinding = {
+const pathFinding = {
 	GRID_CELL_SIZE: 32,
 	gridWidth: undefined,
 	gridHeight: undefined,
 
 	engine: easystar,
 	setGrid: (twoDimensionalArray) => {
-		pathfinding.gridWidth = twoDimensionalArray[0].length
-		pathfinding.gridHeight = twoDimensionalArray.length
+		pathFinding.gridWidth = twoDimensionalArray[0].length
+		pathFinding.gridHeight = twoDimensionalArray.length
 		redrawDebugGrid(twoDimensionalArray)
 		easystar.setGrid(twoDimensionalArray)
 	},
@@ -31,7 +31,7 @@ const pathfinding = {
 	findPathToClosestType: ({ startX, startY, start, type, callback }) => {
 		startX = startX >= 0 ? startX : start.x
 		startY = startY >= 0 ? startY : start.y
-		const target = buliding._.getClosestPoint(startX, startY, type)
+		const target = building._.getClosestPoint(startX, startY, type)
 
 		return easystar.findPath(startX, startY, target.x, target.y, callback)
 	},
@@ -40,7 +40,7 @@ const pathfinding = {
 	calculate: () => easystar.calculate(),
 }
 
-export default pathfinding
+export default pathFinding
 
 const debugGrid = new Container()
 const gridGraphics = new Graphics()
@@ -63,10 +63,10 @@ function redrawDebugGrid(grid) {
 			gridGraphics
 				.lineStyle(1, OUTLINE)
 				.drawRect(
-					x * pathfinding.GRID_CELL_SIZE,
-					y * pathfinding.GRID_CELL_SIZE,
-					pathfinding.GRID_CELL_SIZE,
-					pathfinding.GRID_CELL_SIZE
+					x * pathFinding.GRID_CELL_SIZE,
+					y * pathFinding.GRID_CELL_SIZE,
+					pathFinding.GRID_CELL_SIZE,
+					pathFinding.GRID_CELL_SIZE
 				)
 			if (value > 0) {
 				gridGraphics.endFill()
@@ -77,15 +77,15 @@ function redrawDebugGrid(grid) {
 
 function getCellColor(value) {
 	switch (value) {
-		case buliding.FLOOR:
+		case building.FLOOR:
 			return 0x333333
-		case buliding.WALL:
+		case building.WALL:
 			return 0x333333
-		case buliding.DANCEFLOOR:
+		case building.DANCE_FLOOR:
 			return 0x441133
-		case buliding.DRINKBAR:
+		case building.DRINK_BAR:
 			return 0x113355
-		case buliding.FOODBAR:
+		case building.FOOD_BAR:
 			return 0x114422
 		default:
 			return 0x000000

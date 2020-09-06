@@ -1,4 +1,4 @@
-import Game from "../../game"
+import rnd from "../../utils/rnd"
 
 class RandomChild extends b3.Composite {
 	constructor({ children }) {
@@ -7,7 +7,7 @@ class RandomChild extends b3.Composite {
 	open(tick) {
 		tick.blackboard.set(
 			"runningChild",
-			Game.rnd.pickone(this.children),
+			rnd.pickone(this.children),
 			tick.tree.id,
 			this.id
 		)
