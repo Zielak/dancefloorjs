@@ -1,11 +1,11 @@
-import Component from '../component'
-import Vector from '../vector'
-import * as utils from '../utils'
-import Game from '../game'
+import Component from "../component"
+import Vector from "../vector"
+import * as utils from "../utils"
+import Game from "../game"
 
 export default class Mover extends Component {
 	constructor({ pos, acceleration, force, velocity, bounds } = {}) {
-		super('mover')
+		super("mover")
 
 		// Direction-aware velocity
 		this.velocity = velocity || new Vector()
@@ -20,15 +20,16 @@ export default class Mover extends Component {
 		this.force = force || new Vector()
 
 		// Real position of entity, right before it's rounded for view
-		this.realPos = new Vector(pos && pos.x || 0, pos && pos.y || 0)
+		this.realPos = new Vector((pos && pos.x) || 0, (pos && pos.y) || 0)
 
 		// Used in pathfinding, will go to each point one by one
 		this.path = []
 
 		this.bounds = bounds || {
-			x: 10, y: 10,
+			x: 10,
+			y: 10,
 			w: Game.gameWidth - 20,
-			h: Game.gameHeight - 20
+			h: Game.gameHeight - 20,
 		}
 	}
 
@@ -40,13 +41,13 @@ export default class Mover extends Component {
 
 		this.velocity.add(this.force)
 		this.velocity.add(this.acceleration)
-		
-		if(this.path && this.path.finished === false){
+
+		if (this.path && this.path.finished === false) {
 			updatePathMovement(this.path, this.realPos, this.velocity)
 		}
 
 		// Speed limit
-		if(this.velocity.length > this.maxSpeed){
+		if (this.velocity.length > this.maxSpeed) {
 			this.velocity.normalize().multiplyScalar(this.maxSpeed)
 		}
 
@@ -70,13 +71,13 @@ export default class Mover extends Component {
 		this.force.y += _y
 	}
 
-	moveAlongPath(path){
+	moveAlongPath(path) {
 		// COPY the path. We'll be modyfying it
 		this.path = path.slice(0)
 		this.path.target = 0
 		this.path.finished = path.length > 0 ? false : true
 	}
-	clearPath(){
+	clearPath() {
 		this.path = []
 	}
 
@@ -97,35 +98,38 @@ export default class Mover extends Component {
 }
 
 /**
- * 
- * 
- * @param {array} path 
- * @param {Vector} position 
- * @param {Vector} velocity 
+ *
+ *
+ * @param {array} path
+ * @param {Vector} position
+ * @param {Vector} velocity
  */
-function updatePathMovement(path, position, velocity){
+function updatePathMovement(path, position, velocity) {
 	// check if we're in position yet
 	const current = position.clone()
 
 	let target = utils.gridPos2WorldPos(path[path.target] || current)
 
-	if(
-		current.x >= target.x-5 && current.x <= target.x+5 &&
-		current.y >= target.y-5 && current.y <= target.y+5
-	){
-		if(++path.target > path.length-1){
+	if (
+		current.x >= target.x - 5 &&
+		current.x <= target.x + 5 &&
+		current.y >= target.y - 5 &&
+		current.y <= target.y + 5
+	) {
+		if (++path.target > path.length - 1) {
 			path.finished = true
 			return
-		}else{
+		} else {
 			target = utils.gridPos2WorldPos(path[path.target])
 			// console.log('went though',target,`${path.length - path.target} points to go`)
 		}
 	}
 	// go straight to closest point
-	velocity.set_xy(1,1).normalize()
+	velocity.set_xy(1, 1).normalize()
 	velocity.length = Vector.Subtract(target, current).multiplyScalar(100).length
 
-	velocity.angle2D = Math.atan2(current.y - target.y, current.x - target.x) - Math.PI
+	velocity.angle2D =
+		Math.atan2(current.y - target.y, current.x - target.x) - Math.PI
 }
 
 function keepInBounds(pos, velocity, bounds) {

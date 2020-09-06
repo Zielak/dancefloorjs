@@ -1,6 +1,4 @@
-
 export default class Vector {
-
 	constructor(x, y) {
 		this.x = x || 0
 		this.y = y || 0
@@ -23,34 +21,40 @@ export default class Vector {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param {number} _dest_x 
-	 * @param {number} _dest_y 
-	 * @param {number} _t 
+	 *
+	 *
+	 * @param {number} _dest_x
+	 * @param {number} _dest_y
+	 * @param {number} _t
 	 * @returns this
 	 * @memberof Vector
 	 */
 	lerp_xy(_dest_x, _dest_y, _t) {
-		return this.set_xy(Math.lerp(this.x, _dest_x, _t), Math.lerp(this.y, _dest_y, _t))
+		return this.set_xy(
+			Math.lerp(this.x, _dest_x, _t),
+			Math.lerp(this.y, _dest_y, _t)
+		)
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param {Vector} _other 
-	 * @param {number} _t 
+	 *
+	 *
+	 * @param {Vector} _other
+	 * @param {number} _t
 	 * @returns this
 	 * @memberof Vector
 	 */
 	lerp(_other, _t) {
-		return this.set_xy(Math.lerp(this.x, _other.x, _t), Math.lerp(this.y, _other.y, _t))
+		return this.set_xy(
+			Math.lerp(this.x, _other.x, _t),
+			Math.lerp(this.y, _other.y, _t)
+		)
 	}
 
 	/**
 	 * Rounds vector coordinated to "integers"
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof Vector
 	 */
 	round() {
@@ -58,19 +62,19 @@ export default class Vector {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param {Vector} other 
-	 * @returns 
+	 *
+	 *
+	 * @param {Vector} other
+	 * @returns
 	 * @memberof Vector
 	 */
 	equals(other) {
-		return (this.x === other.x && this.y === other.y)
+		return this.x === other.x && this.y === other.y
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @returns {Vector}
 	 * @memberof Vector
 	 */
@@ -101,9 +105,9 @@ export default class Vector {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param {number} v 
+	 *
+	 *
+	 * @param {number} v
 	 * @returns {Vector}
 	 * @memberof Vector
 	 */
@@ -111,9 +115,9 @@ export default class Vector {
 		return this.set_xy(this.x + v, this.y + v)
 	}
 	/**
-	 * 
-	 * 
-	 * @param {number} v 
+	 *
+	 *
+	 * @param {number} v
 	 * @returns {Vector}
 	 * @memberof Vector
 	 */
@@ -121,9 +125,9 @@ export default class Vector {
 		return this.set_xy(this.x - v, this.y - v)
 	}
 	/**
-	 * 
-	 * 
-	 * @param {number} v 
+	 *
+	 *
+	 * @param {number} v
 	 * @returns {Vector}
 	 * @memberof Vector
 	 */
@@ -131,9 +135,9 @@ export default class Vector {
 		return this.set_xy(this.x * v, this.y * v)
 	}
 	/**
-	 * 
-	 * 
-	 * @param {number} v 
+	 *
+	 *
+	 * @param {number} v
 	 * @returns {Vector}
 	 * @memberof Vector
 	 */
@@ -141,7 +145,6 @@ export default class Vector {
 		v != 0 ? this.set_xy(this.x / v, this.y / v) : this.set_xy(0, 0)
 		return this
 	}
-
 
 	get normalized() {
 		return this.clone().normalize()
@@ -157,7 +160,7 @@ export default class Vector {
 	/**
 	 * Changes the angle of the vector.
 	 * X and Y will change, length stays the same.
-	 * 
+	 *
 	 * @memberof Vector
 	 */
 	set angle2D(v) {
@@ -166,7 +169,7 @@ export default class Vector {
 	get angle2D() {
 		return Math.atan2(this.y, this.x)
 	}
-	setAngle(v){
+	setAngle(v) {
 		this.angle2D = v
 		return this
 	}
@@ -175,51 +178,27 @@ export default class Vector {
 	 * STATIC FUNCTIONS
 	 */
 	static Add(a, b) {
-		return new Vector(
-			a.x + b.x,
-			a.y + b.y
-		)
+		return new Vector(a.x + b.x, a.y + b.y)
 	}
 	static AddScalar(a, b) {
-		return new Vector(
-			a.x + b,
-			a.y + b
-		)
+		return new Vector(a.x + b, a.y + b)
 	}
 	static Subtract(a, b) {
-		return new Vector(
-			a.x - b.x,
-			a.y - b.y
-		)
+		return new Vector(a.x - b.x, a.y - b.y)
 	}
 	static SubtractScalar(a, b) {
-		return new Vector(
-			a.x - b,
-			a.y - b
-		)
+		return new Vector(a.x - b, a.y - b)
 	}
 	static MultiplyVector(a, b) {
-		return new Vector(
-			a.x * b.x,
-			a.y * b.y
-		)
+		return new Vector(a.x * b.x, a.y * b.y)
 	}
 	static DivideVector(a, b) {
-		return new Vector(
-			a.x / b.x,
-			a.y / b.y
-		)
+		return new Vector(a.x / b.x, a.y / b.y)
 	}
 	static Multiply(a, b) {
-		return new Vector(
-			a.x * b,
-			a.y * b
-		)
+		return new Vector(a.x * b, a.y * b)
 	}
 	static Divide(a, b) {
-		return new Vector(
-			a.x / b,
-			a.y / b
-		)
+		return new Vector(a.x / b, a.y / b)
 	}
 }

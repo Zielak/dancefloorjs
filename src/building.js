@@ -1,7 +1,7 @@
-import Game from './game'
-import Vector from './vector'
-import pathfinding from './pathfinding'
-import * as utils from './utils'
+import Game from "./game"
+import Vector from "./vector"
+import pathfinding from "./pathfinding"
+import * as utils from "./utils"
 
 const FLOOR = 0
 const WALL = 1
@@ -16,25 +16,25 @@ const bounds = {
 	h: Game.gameHeight,
 }
 
-const walkableTiles = [FLOOR,DANCEFLOOR,DRINKBAR,FOODBAR]
+const walkableTiles = [FLOOR, DANCEFLOOR, DRINKBAR, FOODBAR]
 
 let tilemap = []
 
-function prepareMap(stage){
+function prepareMap(stage) {
 	tilemap = createTileMap(
-		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE)+2,
-		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE)+2
+		parseInt(Game.gameWidth / pathfinding.GRID_CELL_SIZE) + 2,
+		parseInt(Game.gameHeight / pathfinding.GRID_CELL_SIZE) + 2
 	)
 
 	pathfinding.setGrid(tilemap)
 	pathfinding.setAcceptableTiles(walkableTiles)
 	stage && stage.addChild(pathfinding.getDebugGrid())
-	
+
 	// update bounds
 	bounds.x = pathfinding.GRID_CELL_SIZE * 0.1
 	bounds.y = pathfinding.GRID_CELL_SIZE * 0.1
-	bounds.w = (pathfinding.gridWidth-2.1) * pathfinding.GRID_CELL_SIZE
-	bounds.h = (pathfinding.gridHeight-2.1) * pathfinding.GRID_CELL_SIZE
+	bounds.w = (pathfinding.gridWidth - 2.1) * pathfinding.GRID_CELL_SIZE
+	bounds.h = (pathfinding.gridHeight - 2.1) * pathfinding.GRID_CELL_SIZE
 }
 
 function createTileMap(gridCols, gridRows) {
@@ -50,9 +50,9 @@ function createTileMap(gridCols, gridRows) {
 
 /**
  * Gives you position of the closest cell of given type
- * 
- * @param {number} x 
- * @param {number} y 
+ *
+ * @param {number} x
+ * @param {number} y
  * @param {number} type FLOOR, WALL etc
  * @returns {Vector}
  */
@@ -61,7 +61,7 @@ function getClosestPoint(x, y, type = FLOOR) {
 	const start = new Vector(x, y)
 
 	const sorted = utils.mergeSort(points, (a, b) => {
-		return ((Vector.Subtract(start, a).length) - (Vector.Subtract(start, b).length))
+		return Vector.Subtract(start, a).length - Vector.Subtract(start, b).length
 	})
 
 	return sorted[0]
@@ -69,9 +69,9 @@ function getClosestPoint(x, y, type = FLOOR) {
 
 /**
  * Get all points of given type from the tilemap
- * 
- * @param {number} type 
- * @returns 
+ *
+ * @param {number} type
+ * @returns
  */
 function getAllPoints(type = 0) {
 	return tilemap.reduce((foundTiles, row, y) => {
@@ -79,10 +79,10 @@ function getAllPoints(type = 0) {
 			...foundTiles,
 			...row.reduce((tiles, el, x) => {
 				if (el === type) {
-					tiles.push({x, y})
+					tiles.push({ x, y })
 				}
 				return tiles
-			}, [])
+			}, []),
 		]
 	}, [])
 }
@@ -90,42 +90,35 @@ function getAllPoints(type = 0) {
 /**
  * Used in generating building. Gives you one cell.
  * TODO: seperate procedural generation
- * 
- * @param {number} x 
- * @param {number} y 
- * @param {number} width 
- * @param {number} height 
+ *
+ * @param {number} x
+ * @param {number} y
+ * @param {number} width
+ * @param {number} height
  * @returns {number} cell type
  */
 function getTilemapCell(x, y, width, height) {
 	x = x / width
 	y = y / height
 
-	const col = 1/width
-	const row = 1/height
+	const col = 1 / width
+	const row = 1 / height
 
 	let fin = FLOOR
-	
-	if (
-		x > 0.25 && x < 0.7 &&
-		y > 0.25 && y < 0.7
-	) {
+
+	if (x > 0.25 && x < 0.7 && y > 0.25 && y < 0.7) {
 		fin = DANCEFLOOR
 	}
-	
-	let movedPI = Math.PI + Math.PI*0.15
+
+	let movedPI = Math.PI + Math.PI * 0.15
 
 	// Drink bar
-	if (
-		Math.cos( y*movedPI + x*movedPI ) > 0.6
-	) {
+	if (Math.cos(y * movedPI + x * movedPI) > 0.6) {
 		fin = DRINKBAR
 	}
 
 	// Food bar
-	if (
-		Math.cos( (y+0.5)*movedPI - (x+0.5)*movedPI ) < -0.6
-	) {
+	if (Math.cos((y + 0.5) * movedPI - (x + 0.5) * movedPI) < -0.6) {
 		fin = FOODBAR
 	}
 
@@ -135,7 +128,7 @@ function getTilemapCell(x, y, width, height) {
 	}
 
 	// Bounds walls
-	if (y>1-row*3 || x>1-col*3){
+	if (y > 1 - row * 3 || x > 1 - col * 3) {
 		fin = WALL
 	}
 	return fin
@@ -150,11 +143,11 @@ export default {
 	bounds,
 
 	prepareMap,
-	
+
 	_: {
 		createTileMap,
 		getClosestPoint,
 		getTilemapCell,
 		getAllPoints,
-	}
+	},
 }

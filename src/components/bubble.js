@@ -1,7 +1,7 @@
-import { Graphics, Text, Container } from 'pixi.js'
-import Game from '../game'
-import Timer from '../timer'
-import Component from '../component'
+import { Graphics, Text, Container } from "pixi.js"
+import Game from "../game"
+import Timer from "../timer"
+import Component from "../component"
 // import Vector from '../vector'
 
 const defaultTextStyle = { fontSize: 12 }
@@ -11,25 +11,34 @@ const paddingY = 4
 export default class Bubble extends Component {
 	/**
 	 * Creates an instance of Bubble.
-	 * @param {string} message 
-	 * @param {PIXI.TextStyle} textStyle 
+	 * @param {string} message
+	 * @param {PIXI.TextStyle} textStyle
 	 * @param {PIXI.Rectangle} rectangle
 	 * @param {string} [background]
 	 * @memberof Bubble
 	 */
-	constructor({message = '-silence-', textStyle, rectangle, background = 0xffffff}) {
-		super('bubble')
+	constructor({
+		message = "-silence-",
+		textStyle,
+		rectangle,
+		background = 0xffffff,
+	}) {
+		super("bubble")
 
 		this.timer = new Timer(Math.min(message.length, 10) * 150)
 
 		this.container = new Container()
 
 		this.bgRect = new Graphics()
-		this.bgRect.beginFill(background, 0.9)
+		this.bgRect
+			.beginFill(background, 0.9)
 			.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height)
 			.endFill()
 
-		this.text = new Text(message, Object.assign({}, defaultTextStyle, textStyle || {}))
+		this.text = new Text(
+			message,
+			Object.assign({}, defaultTextStyle, textStyle || {})
+		)
 
 		this.updateSizes(this.bgRect, this.text)
 
@@ -58,8 +67,8 @@ export default class Bubble extends Component {
 	}
 
 	updateSizes(bg, text) {
-		bg.width = text.width + paddingX*2
-		bg.height = text.height + paddingY*2
+		bg.width = text.width + paddingX * 2
+		bg.height = text.height + paddingY * 2
 	}
 
 	checkLifeTime(entity) {

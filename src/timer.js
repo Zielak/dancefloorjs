@@ -1,13 +1,12 @@
-
 const _timers = []
 
 export default class Timer {
 	/**
 	 * Creates an instance of Timer.
-	 * @param {number} time 
+	 * @param {number} time
 	 * @memberof Timer
 	 */
-	constructor(time = 0){
+	constructor(time = 0) {
 		this.counter = 0
 		this.time = time
 		this.running = true
@@ -15,9 +14,8 @@ export default class Timer {
 		_timers.push(this)
 	}
 
-
-	stop(){
-		if(this.running){
+	stop() {
+		if (this.running) {
 			this.running = false
 			_timers.splice(_timers.indexOf(this), 1)
 		}
@@ -26,19 +24,19 @@ export default class Timer {
 	/**
 	 * Override this function to make it run
 	 * once this timer finished ticking
-	 * 
+	 *
 	 * @memberof Timer
 	 */
-	run(){}
+	run() {}
 
-	_update(dt){
+	_update(dt) {
 		this.counter += dt
-		if(this.counter >= this.time){
+		if (this.counter >= this.time) {
 			this._finish()
 		}
 	}
 
-	_finish(){
+	_finish() {
 		this.running = false
 		this.finished = true
 		this.run()
@@ -46,27 +44,27 @@ export default class Timer {
 
 	/**
 	 * Call this with given delta
-	 * 
+	 *
 	 * @static
 	 * @param {number} dt delta time since last update
 	 * @memberof Timer
 	 */
-	static update(dt){
-		_timers.forEach(el => {
+	static update(dt) {
+		_timers.forEach((el) => {
 			el._update(dt)
 		})
 	}
 
 	/**
 	 * Factory for new Timer instance
-	 * 
+	 *
 	 * @static
-	 * @param {number} time 
+	 * @param {number} time
 	 * @param {Function} fun function to call after timer is finished
-	 * @returns 
+	 * @returns
 	 * @memberof Timer
 	 */
-	static delay(time, fun){
+	static delay(time, fun) {
 		const t = new Timer(time)
 		t.run = fun
 
@@ -76,11 +74,11 @@ export default class Timer {
 	/**
 	 * Stops all timers immediatelly, ignoring their results
 	 * no callbacks should be called
-	 * 
+	 *
 	 * @static
 	 * @memberof Timer
 	 */
-	static clear(){
-		_timers.forEach(el => el.stop())
+	static clear() {
+		_timers.forEach((el) => el.stop())
 	}
 }

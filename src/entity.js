@@ -1,11 +1,10 @@
-import Game from './game'
-import CES from 'ces'
+import Game from "./game"
+import CES from "ces"
 
 export default class Entity extends CES.Entity {
-
-	constructor(){
+	constructor() {
 		super()
-		
+
 		Game.world.addEntity(this)
 	}
 
@@ -20,5 +19,4 @@ export default class Entity extends CES.Entity {
 		super.removeComponent(component.component)
 		component._entity = undefined
 	}
-
 }

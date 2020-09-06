@@ -1,21 +1,21 @@
 // External dependencies
-import CES from 'ces'
-import {Container, autoDetectRenderer} from 'pixi.js'
-import Chance from 'chance'
+import CES from "ces"
+import { Container, autoDetectRenderer } from "pixi.js"
+import Chance from "chance"
 
 const rnd = new Chance()
 rnd.float = (min, max) => rnd.floating({ min, max })
 rnd.int = (min, max) => rnd.integer({ min, max })
 
 // Internal dependencies
-import * as utils from './utils'
-import Vector from './vector'
-import Timer from './timer'
-import pathfinding from './pathfinding'
-import building from './building'
-import visualDebugger from './visualDebugger'
+import * as utils from "./utils"
+import Vector from "./vector"
+import Timer from "./timer"
+import pathfinding from "./pathfinding"
+import building from "./building"
+import visualDebugger from "./visualDebugger"
 
-import Human from './human/human'
+import Human from "./human/human"
 
 const gameWidth = document.body.offsetWidth
 const gameHeight = document.body.offsetHeight
@@ -42,25 +42,28 @@ const state = {
 
 /**
  * Stards the game with bunch of people
- * 
+ *
  */
 function start() {
 	// Start the loop again when browser tab becomes active
-	document.addEventListener('visibilitychange', () => {
-		if (document.visibilityState === 'visible') {
+	document.addEventListener("visibilitychange", () => {
+		if (document.visibilityState === "visible") {
 			resume()
 		}
 	})
-	const spawnGuy = point => new Human({
-		pos: new Vector(point.x, point.y),
-		bounds: building.bounds
-	})
-	
+	const spawnGuy = (point) =>
+		new Human({
+			pos: new Vector(point.x, point.y),
+			bounds: building.bounds,
+		})
+
 	const spawnPeople = () => {
 		for (let i = 0; i < 10; i++) {
-			const randomPlace = utils.gridPos2WorldPos(rnd.pickone(building._.getAllPoints()))
+			const randomPlace = utils.gridPos2WorldPos(
+				rnd.pickone(building._.getAllPoints())
+			)
 			if (i === 0) {
-				stage.emit('updateHumanDebugger', spawnGuy(randomPlace))
+				stage.emit("updateHumanDebugger", spawnGuy(randomPlace))
 			} else {
 				spawnGuy(randomPlace)
 			}
@@ -69,7 +72,7 @@ function start() {
 
 	spawnPeople()
 
-	console.log('Game Loop > started')
+	console.log("Game Loop > started")
 	resume()
 }
 
@@ -94,7 +97,7 @@ function resume() {
 
 function update() {
 	// Break the loop when we hide or paused
-	if (document.visibilityState === 'hidden' || state.paused) return
+	if (document.visibilityState === "hidden" || state.paused) return
 
 	// I want that in seconds i guess
 	state.delta = (window.performance.now() - state.lastTime) / 1000
@@ -129,23 +132,22 @@ function init() {
 	start()
 
 	// Keyboard stuff
-	document.addEventListener('keydown', _keyDownHandler)
+	document.addEventListener("keydown", _keyDownHandler)
 }
 
 function _keyDownHandler(e) {
 	switch (e.which) {
 		case 72: // H
-			console.log('All humans: ', world._entities.toArray())
+			console.log("All humans: ", world._entities.toArray())
 			break
 		case 77: // M
-			console.log('World: ', world)
+			console.log("World: ", world)
 			break
 		case 80: // P
 			state.paused ? resume() : pause()
 			break
 	}
 }
-
 
 export default {
 	gameWidth,

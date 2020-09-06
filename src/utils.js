@@ -1,28 +1,26 @@
-import Vector from './vector'
-import pathfinding from './pathfinding'
+import Vector from "./vector"
+import pathfinding from "./pathfinding"
 
-export const mergeSort = function(array, comparefn) {
+export const mergeSort = function (array, comparefn) {
 	function merge(arr, aux, lo, mid, hi, comparefn) {
 		let i = lo
 		let j = mid + 1
 		let k = lo
 		let _b = true
-		while(_b){
+		while (_b) {
 			let cmp = comparefn(arr[i], arr[j])
-			if(cmp <= 0){
+			if (cmp <= 0) {
 				aux[k++] = arr[i++]
-				if(i > mid){
-					do
-						aux[k++] = arr[j++]
-					while(j <= hi)
+				if (i > mid) {
+					do aux[k++] = arr[j++]
+					while (j <= hi)
 					_b = false
 				}
 			} else {
 				aux[k++] = arr[j++]
-				if(j > hi){
-					do
-						aux[k++] = arr[i++]
-					while(i <= mid)
+				if (j > hi) {
+					do aux[k++] = arr[i++]
+					while (i <= mid)
 					_b = false
 				}
 			}
@@ -31,7 +29,7 @@ export const mergeSort = function(array, comparefn) {
 
 	function sortarrtoaux(arr, aux, lo, hi, comparefn) {
 		if (hi < lo) return
-		if (hi == lo){
+		if (hi == lo) {
 			aux[lo] = arr[lo]
 			return
 		}
@@ -63,35 +61,39 @@ export function rgb2hex(v) {
 	return rgb //'#' + (0x1000000 + rgb).toString(16).slice(1)
 }
 
-
-export function worldPos2GridPos(x, y){
+export function worldPos2GridPos(x, y) {
 	let vec = new Vector()
-	if(x instanceof Object){
+	if (x instanceof Object) {
 		vec.set_xy(x.x, x.y)
-	}else{
+	} else {
 		vec.set_xy(x, y)
 	}
-	return vec.divideScalar(pathfinding.GRID_CELL_SIZE).subtractScalar(0.5).round()
+	return vec
+		.divideScalar(pathfinding.GRID_CELL_SIZE)
+		.subtractScalar(0.5)
+		.round()
 }
-export function gridPos2WorldPos(x, y){
+export function gridPos2WorldPos(x, y) {
 	let vec = new Vector()
-	if(x instanceof Object){
+	if (x instanceof Object) {
 		vec.set_xy(x.x, x.y)
-	}else{
+	} else {
 		vec.set_xy(x, y)
 	}
-	return vec.multiplyScalar(pathfinding.GRID_CELL_SIZE).addScalar(pathfinding.GRID_CELL_SIZE/2)
+	return vec
+		.multiplyScalar(pathfinding.GRID_CELL_SIZE)
+		.addScalar(pathfinding.GRID_CELL_SIZE / 2)
 }
 
 /**
  * Sorts all children in the container by their true `y` position
- * 
+ *
  * @export
- * @param {Array} container 
+ * @param {Array} container
  * @returns {Array} of all PIXI stuff from the Container
  */
 export function sortChildren(container) {
 	return mergeSort(container, (a, b) => {
-		return ((a._y || a.y) - (b._y || b.y))
+		return (a._y || a.y) - (b._y || b.y)
 	})
 }
