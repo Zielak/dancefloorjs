@@ -6,7 +6,7 @@ trying to re-create my dancefloor simulator [from Haxe](https://github.com/Ziela
 
 most likely NOT up to date:
 
-[Open DEMO](https://darekgreenly.com/pub/dancefloorjs/)
+[Open DEMO](https://darekgreenly.com/pub/dancefloorjs)
 
 ## run it
 
