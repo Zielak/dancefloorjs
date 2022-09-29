@@ -17,7 +17,7 @@
 		"behavior3js": "git+ssh://git@github.com:behavior3/behavior3js.git",
 		"ces": "0.0.4",
 		"chance": "^1.1.7",
-		"d3-color": "^2.0.0",
+		"d3-color": "^3.1.0",
 		"easystarjs": "^0.4.3",
 		"webpack": "^4.44.1",
 		"webpack-dev-server": "^3.11.0"
